@@ -16,7 +16,7 @@ export class RequiredMultipleRule implements IValidate {
     this.valueOperator = extractValueAndOperator(this.constraint);
   }
 
-  validate(value: string[] | number[] | boolean[], {}): boolean {
+  validate(value: any[]): boolean {
     const values = value.filter((val: string | number | boolean) => {
       if (typeof val === "string") {
         return Boolean(val.trim());
