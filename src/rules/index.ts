@@ -1,6 +1,6 @@
 import { RequiredRule } from "./RequiredRule";
 import { LengthRule, ILengthRuleParams } from "./LengthRule";
-import { NotEqualRule } from "./NotEqualRule";
+import { EqualRule } from "./EqualRule";
 
 export interface IValidate {
   message: string;
@@ -26,7 +26,7 @@ class ValidationRules {
   }
 
   notEqual(args: IRuleParams): this {
-    this.activeRules.push({ name: "notEqual", rule: new NotEqualRule(args) });
+    this.activeRules.push({ name: "notEqual", rule: new EqualRule(args) });
     return this;
   }
 

@@ -1,6 +1,6 @@
 import { IValidate, IRuleParams } from "./index";
 
-export class NotEqualRule implements IValidate {
+export class EqualRule implements IValidate {
   message: string;
 
   constructor(args: IRuleParams) {
@@ -8,6 +8,6 @@ export class NotEqualRule implements IValidate {
   }
 
   validate(value: string, ruleExtras: { [key: string]: any }): boolean {
-    return value !== ruleExtras.other;
+    return value === ruleExtras.other;
   }
 }
