@@ -8,11 +8,18 @@ const firstName = new Rule("firstName")
     message: "This is not the correct length",
     constraint: ">=4",
   })
-  .notEqual({
+  .equal({
     message: "This should not be equal",
   });
 
-console.log(firstName.validate("colin", { other: "colin" }));
+const hobbies = new Rule("hobbies").requiredMultiple({
+  message: "You need to select at least 3 items",
+  constraint: ">=3",
+});
+
+// console.log(firstName.validate("colin", { other: "colin" }));
+//
+console.log(hobbies.validate(["a", "f", "sd"]));
 
 // {isValid: false,
 //   errors: [

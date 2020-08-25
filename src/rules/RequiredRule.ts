@@ -7,7 +7,7 @@ export class RequiredRule implements IValidate {
     this.message = args.message;
   }
 
-  validate(value?: string | boolean): boolean {
+  validate(value: string | boolean | undefined): boolean {
     if (typeof value === "string") {
       return value.trim() !== "";
     } else {

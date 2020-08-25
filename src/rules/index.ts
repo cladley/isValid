@@ -1,10 +1,13 @@
 import { RequiredRule } from "./RequiredRule";
 import { LengthRule, ILengthRuleParams } from "./LengthRule";
 import { EqualRule } from "./EqualRule";
+import { RequiredMultipleRule, IRequiredMultipleParams } from "./RequiredMultipleRule";
+
+export type valueParam = string | boolean | string[] | number[] | boolean[] | undefined;
 
 export interface IValidate {
   message: string;
-  validate(value: string | boolean, ruleExtras?: { [key: string]: any }): boolean | undefined;
+  validate(value: valueParam, ruleExtras?: { [key: string]: any }): boolean | undefined;
 }
 
 export interface IisValid {
@@ -25,8 +28,13 @@ class ValidationRules {
     return this;
   }
 
-  notEqual(args: IRuleParams): this {
-    this.activeRules.push({ name: "notEqual", rule: new EqualRule(args) });
+  requiredMultiple(args: IRequiredMultipleParams): this {
+    this.activeRules.push({ name: "requiredMultiple", rule: new RequiredMultipleRule(args) });
+    return this;
+  }
+
+  equal(args: IRuleParams): this {
+    this.activeRules.push({ name: "equal", rule: new EqualRule(args) });
     return this;
   }
 
@@ -41,7 +49,7 @@ export class Rule extends ValidationRules {
     super();
   }
 
-  validate(value: any, ruleExtras: { [key: string]: any }): IisValid {
+  validate(value: any, ruleExtras?: { [key: string]: any }): IisValid {
     const errors: { [key: string]: any }[] = [];
 
     this.activeRules.forEach((aRule) => {
