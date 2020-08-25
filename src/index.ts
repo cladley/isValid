@@ -20,10 +20,3 @@ const hobbies = new Rule("hobbies").requiredMultiple({
 // console.log(firstName.validate("colin", { other: "colin" }));
 //
 console.log(hobbies.validate(["a", "f", "sd"]));
-
-// {isValid: false,
-//   errors: [
-//     {required: message},
-//     {Equal: message}
-//   ]
-// }
