@@ -1,0 +1,44 @@
+{
+  "name": "isvalid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/src/index.js",
+    "start": "concurrently npm:start:*",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    },
+    "preset": "ts-jest",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "setupFilesAfterEnv": [
+      "./setupTests.ts"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/*.(ts|js)"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "concurrently": "^5.3.0",
+    "jest": "^26.4.1",
+    "parcel-bundler": "^1.12.4",
+    "ts-jest": "^26.2.0",
+    "typescript": "^4.0.2"
+  }
+}
