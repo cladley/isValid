@@ -1,4 +1,5 @@
 import { Rule } from "./rules";
+import { Validate } from "./Validate";
 
 const firstName = new Rule("firstName")
   .required({
@@ -9,7 +10,7 @@ const firstName = new Rule("firstName")
     constraint: ">=4",
   })
   .equal({
-    message: "This should not be equal",
+    message: "Your passwords should match",
   });
 
 const hobbies = new Rule("hobbies").requiredMultiple({
@@ -17,6 +18,18 @@ const hobbies = new Rule("hobbies").requiredMultiple({
   constraint: ">=3",
 });
 
-// console.log(firstName.validate("colin", { other: "colin" }));
-//
-console.log(hobbies.validate(["a", "f", "sd"]));
+console.log(
+  firstName.validate("colin", {
+    equal: { to: "sfsdf" },
+  })
+);
+
+// console.log(hobbies.validate(["a", "f", "sd"]));
+
+const myForm = new Validate();
+
+myForm.addRules([firstName, hobbies]);
+
+// myForm.validate({
+//   firstName: { value: "Colin", equal: { to: "colin" } },
+// });

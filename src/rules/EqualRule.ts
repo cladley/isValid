@@ -1,13 +1,20 @@
-import { IValidate, IRuleParams } from "./index";
+import { IValidate, IRuleParams, RuleSpecficParam } from "./index";
 
-export class EqualRule implements IValidate {
+interface EqualRuleParam extends RuleSpecficParam {
+  equal: {
+    to: string;
+  };
+}
+
+export class EqualRule implements IValidate<EqualRuleParam> {
+  static ruleName = "equal";
   message: string;
 
   constructor(args: IRuleParams) {
     this.message = args.message;
   }
 
-  validate(value: string, ruleExtras: { [key: string]: any }): boolean {
-    return value === ruleExtras.other;
+  validate(value: string, ruleSpecificParams: EqualRuleParam): boolean {
+    return value === ruleSpecificParams.equal.to;
   }
 }

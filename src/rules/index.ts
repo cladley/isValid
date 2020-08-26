@@ -3,11 +3,15 @@ import { LengthRule, ILengthRuleParams } from "./LengthRule";
 import { EqualRule } from "./EqualRule";
 import { RequiredMultipleRule, IRequiredMultipleParams } from "./RequiredMultipleRule";
 
-export type valueParam = string | boolean | string[] | number[] | boolean[] | undefined;
+export type ValueParam = string | boolean | string[] | number[] | boolean[] | undefined;
 
-export interface IValidate {
+export interface RuleSpecficParam {
+  [key: string]: any;
+}
+
+export interface IValidate<T = RuleSpecficParam> {
   message: string;
-  validate(value: valueParam, ruleExtras?: { [key: string]: any }): boolean | undefined;
+  validate(value: ValueParam, ruleSpecificParams?: T): boolean | undefined;
 }
 
 export interface IisValid {
@@ -49,11 +53,11 @@ export class Rule extends ValidationRules {
     super();
   }
 
-  validate(value: any, ruleExtras?: { [key: string]: any }): IisValid {
+  validate(value: any, ruleSpecificParams?: { [key: string]: any }): IisValid {
     const errors: { [key: string]: any }[] = [];
 
     this.activeRules.forEach((aRule) => {
-      const isValid = aRule.rule.validate(value, ruleExtras);
+      const isValid = aRule.rule.validate(value, ruleSpecificParams);
 
       if (!isValid) {
         errors.push({
