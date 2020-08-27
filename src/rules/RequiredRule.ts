@@ -1,17 +1,34 @@
-import { IValidate, IRuleParams } from "./index";
+import { Rule } from "./index";
 
-export class RequiredRule implements IValidate {
-  message: string;
+export class RequiredRule implements Rule {
+  element: HTMLElement | HTMLInputElement;
+  params: Record<string, string>;
+  priority = 100;
+  name = "required";
 
-  constructor(args: IRuleParams) {
-    this.message = args.message;
+  constructor(element: HTMLElement, params: Record<string, string>) {
+    this.element = element;
+    this.params = params;
   }
 
-  validate(value: string | boolean | undefined): boolean {
+  getValue(): any {
+    if (this.element instanceof HTMLInputElement) {
+      return this.element.value;
+    }
+
+    return this.element;
+  }
+
+  validate(): boolean {
+    const value = this.getValue();
+
     if (typeof value === "string") {
-      return value.trim() !== "";
+      if (value.trim() === "") {
+        return false;
+      }
+      return true;
     } else {
-      return Boolean(value);
+      return value;
     }
   }
 }

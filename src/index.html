@@ -15,6 +15,7 @@
           name="firstName"
           data-validate-required
           data-validate-required__message="This is required."
+          data-validate-required__other="this is something else"
         />
       </div>
 
@@ -26,10 +27,27 @@
           name="lastName"
           data-validate-required
           data-validate-required__message="This is required"
-          data-validate-length="<=3"
-          data-validate-length__message="This is required."
         />
       </div>
+
+      <!-- <div class="form-group">
+        <label>Password:</label>
+        <input class="password" type="text" name="password" />
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password:</label>
+        <input
+          class=""
+          type="text"
+          name="confirmPassword"
+          data-validate-equal
+          data-validate-equal__message="This should match your password"
+          data-validate-equal__to="abc"
+        />
+      </div> -->
+
+      <button type="submit">Submit</button>
     </form>
     <script src="index.ts"></script>
   </body>

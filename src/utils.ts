@@ -20,3 +20,9 @@ export const extractValueAndOperator = (valueOp: string): { operator: string; va
 
   return { operator, value };
 };
+
+type RuleName = "required";
+
+export function toCamelCase(str: string): RuleName {
+  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()) as RuleName;
+}
