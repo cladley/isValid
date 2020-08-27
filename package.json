@@ -27,7 +27,7 @@
       "./setupTests.ts"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/*.(ts|js)"
+      "<rootDir>/**/__tests__/*.(ts|js)"
     ]
   },
   "keywords": [],

@@ -1,5 +1,5 @@
 import { Rule } from "./rules";
-import { Validate } from "./Validate";
+import { Validate, ValidateType } from "./Validate";
 
 const firstName = new Rule("firstName")
   .required({
@@ -18,18 +18,13 @@ const hobbies = new Rule("hobbies").requiredMultiple({
   constraint: ">=3",
 });
 
-console.log(
-  firstName.validate("colin", {
-    equal: { to: "sfsdf" },
-  })
-);
-
-// console.log(hobbies.validate(["a", "f", "sd"]));
-
 const myForm = new Validate();
 
 myForm.addRules([firstName, hobbies]);
 
-// myForm.validate({
-//   firstName: { value: "Colin", equal: { to: "colin" } },
-// });
+console.log(
+  myForm.validate({
+    firstName: { value: "Colin", equal: { to: "colin" } },
+    hobbies: { value: ["a", "b", "c"] },
+  })
+);
