@@ -3,7 +3,7 @@ import { Validate, ValidateType } from "./Validate";
 
 const firstName = new Rule("firstName")
   .required({
-    message: "This is required dude",
+    message: "This is required dude ",
   })
   .length({
     message: "This is not the correct length",
