@@ -4,6 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <style>
+      .is-error {
+        border: 1px solid red;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .error {
+        font-weight: 700;
+        display: block;
+        font-size: 14px;
+        color: red;
+        margin-top: 5px;
+      }
+    </style>
   </head>
   <body>
     <form id="form">
@@ -30,6 +48,28 @@
         />
       </div>
 
+      <div class="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          data-validate-callback
+          data-validate-callback__name="username"
+          data-validate-callback__message="This username is already taken"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Colin</label>
+        <input
+          type="text"
+          name="username"
+          data-validate-colin
+          data-validate-colin__name="username"
+          data-validate-colin__message="This username is already taken"
+        />
+      </div>
+
       <!-- <div class="form-group">
         <label>Password:</label>
         <input class="password" type="text" name="password" />
@@ -48,6 +88,7 @@
       </div> -->
 
       <button type="submit">Submit</button>
+      <button type="button" class="btn-manual">Run validation manually</button>
     </form>
     <script src="index.ts"></script>
   </body>

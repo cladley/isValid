@@ -9,7 +9,7 @@ export interface Rule {
   validate(): boolean;
 }
 
-export type RuleType = typeof RequiredRule;
+export type RuleType = new (...args: any[]) => Rule;
 
 export const rules = new Map<string, RuleType>();
 

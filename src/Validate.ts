@@ -1,13 +1,17 @@
 import { RulesExtractor } from "./RulesExtractor";
 import { FieldValidator } from "./FieldValidator";
 import { ErrorRenderer } from "./ErrorRenderer";
+import { addRule, RuleType } from "./rules";
 
 interface ValidateProps {
   prefix?: string;
   parentSelector?: string;
   errorClass?: string;
   parentErrorClass?: string;
+  pristineClass?: string;
   errorElementType: string;
+  clearOnFocus: boolean;
+  live: boolean;
   onSubmit?(event: Event, isValid: boolean, errors: InputErrors[]): void;
 }
 
@@ -19,9 +23,12 @@ interface InputErrors {
 const defaultProps = {
   prefix: "data-validate",
   parentSelector: ".form-group",
-  parentErrorClass: ".is-error",
+  parentErrorClass: "is-error",
+  pristineClass: "is-pristine",
   errorClass: "error",
   errorElementType: "span",
+  clearOnFocus: false,
+  live: false,
 };
 
 export class Validate {
@@ -29,6 +36,10 @@ export class Validate {
   props: ValidateProps;
   rulesExtractor: RulesExtractor;
   activeValidators: FieldValidator[] = [];
+
+  static registerValidatorRule(ruleName: string, rule: RuleType) {
+    addRule(ruleName, rule);
+  }
 
   constructor(element: HTMLElement, props: ValidateProps) {
     this.element = element;
@@ -41,6 +52,7 @@ export class Validate {
 
   init() {
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
+    console.log(elementRules);
 
     for (const [element, rules] of elementRules) {
       this.activeValidators.push(
@@ -52,7 +64,8 @@ export class Validate {
             parentSelector: this.props.parentSelector as string,
             parentErrorClass: this.props.parentErrorClass as string,
             errorElementType: this.props.errorElementType,
-          })
+          }),
+          this.props
         )
       );
     }
@@ -76,7 +89,7 @@ export class Validate {
     const allErrors: InputErrors[] = [];
 
     this.activeValidators.forEach((v) => {
-      const { isValid, element, errors } = v.validate();
+      const { isValid, element, errors } = v.validate(silent);
       areAllValid = areAllValid && isValid;
 
       if (!isValid) {

@@ -36,7 +36,7 @@ export class ErrorRenderer {
   showError(errorMessage: string) {
     const errorElement = this.getErrorElement();
     errorElement.textContent = errorMessage;
-    errorElement.style.display = "initial";
+    errorElement.style.display = "";
     this.parentElement?.appendChild(errorElement);
     this.parentElement?.classList.add(this.parentErrorClass);
   }
