@@ -28,6 +28,6 @@ describe("'required' rule", () => {
     expect(requiredRule.validate()).toEqual(false);
     // test with some whitespace
     input.value = "     ";
-    expect(requiredRule.validate()).toBe(true);
+    expect(requiredRule.validate()).toBe(false);
   });
 });
