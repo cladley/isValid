@@ -21,6 +21,28 @@
         color: red;
         margin-top: 5px;
       }
+
+      .is-validating {
+        background-color: pink;
+      }
+
+      input.is-validating + .validating-message {
+        visibility: visible;
+      }
+
+      @keyframes fade {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .validating-message {
+        animation: fade 0.5s infinite both;
+        visibility: hidden;
+      }
     </style>
   </head>
   <body>
@@ -43,31 +65,22 @@
           class=""
           type="text"
           name="lastName"
-          data-validate-required
-          data-validate-required__message="This is required"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Username</label>
-        <input
-          type="text"
-          name="username"
-          data-validate-callback
-          data-validate-callback__name="username"
-          data-validate-callback__message="This username is already taken"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Colin</label>
-        <input
-          type="text"
-          name="username"
           data-validate-colin
-          data-validate-colin__name="username"
-          data-validate-colin__message="This username is already taken"
+          data-validate-colin__message="Username already taken, please choose another"
         />
+        <span class="validating-message">validating</span>
+      </div>
+
+      <div class="form-group">
+        <label>Check username</label>
+        <input
+          type="text"
+          name="username"
+          data-validate-async
+          data-validate-async__name="username"
+          data-validate-async__message="This username is already taken"
+        />
+        <span class="validating-message">validating</span>
       </div>
 
       <!-- <div class="form-group">

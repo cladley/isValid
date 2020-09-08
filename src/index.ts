@@ -6,7 +6,25 @@ let validate: Validate;
 
 import { Rule } from "./rules";
 
+function wait(timeout: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timeout);
+  });
+}
+
 if (form) {
+  Validate.registerValidatorRuleFunction("colin", async function (value: any) {
+    await wait(2000);
+    if (typeof value === "string") {
+      if (value !== "colin") {
+        return true;
+      }
+      return false;
+    }
+  });
+
   validate = new Validate(form, {
     parentSelector: ".form-group",
     errorClass: "error",

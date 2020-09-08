@@ -1,7 +1,7 @@
 import { RulesExtractor } from "./RulesExtractor";
 import { FieldValidator } from "./FieldValidator";
 import { ErrorRenderer } from "./ErrorRenderer";
-import { addRule, RuleType } from "./rules";
+import { addRule, RuleType, Rule } from "./rules";
 
 interface ValidateProps {
   prefix?: string;
@@ -9,6 +9,7 @@ interface ValidateProps {
   errorClass?: string;
   parentErrorClass?: string;
   pristineClass?: string;
+  validatingClass?: string;
   errorElementType: string;
   clearOnFocus: boolean;
   live: boolean;
@@ -25,6 +26,7 @@ const defaultProps = {
   parentSelector: ".form-group",
   parentErrorClass: "is-error",
   pristineClass: "is-pristine",
+  validatingClass: "is-validating",
   errorClass: "error",
   errorElementType: "span",
   clearOnFocus: false,
@@ -37,8 +39,31 @@ export class Validate {
   rulesExtractor: RulesExtractor;
   activeValidators: FieldValidator[] = [];
 
-  static registerValidatorRule(ruleName: string, rule: RuleType) {
+  static registerValidatorRuleClass(ruleName: string, rule: RuleType) {
     addRule(ruleName, rule);
+  }
+
+  static registerValidatorRuleFunction(ruleName: string, validateFunction: (value: any) => {}) {
+    const dynamicClass = function (element: HTMLElement, params: Record<string, string>) {
+      this.element = element;
+      this.params = params;
+      this.name = ruleName;
+    };
+
+    dynamicClass.prototype.getValue = function (): any {
+      if (this.element instanceof HTMLInputElement) {
+        return this.element.value;
+      }
+
+      return this.element;
+    };
+
+    dynamicClass.prototype.validate = function () {
+      const value = this.getValue();
+      return validateFunction(value);
+    };
+
+    addRule(ruleName, dynamicClass);
   }
 
   constructor(element: HTMLElement, props: ValidateProps) {
@@ -52,7 +77,6 @@ export class Validate {
 
   init() {
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
-    console.log(elementRules);
 
     for (const [element, rules] of elementRules) {
       this.activeValidators.push(
@@ -77,36 +101,52 @@ export class Validate {
     }
   }
 
-  onFormSubmit = (event: Event) => {
+  onFormSubmit = async (event: Event) => {
     if (this.props.onSubmit) {
-      const { isValid, errors } = this.validate();
+      const { isValid, errors } = await this.validate();
       this.props.onSubmit(event, isValid, errors);
     }
   };
 
-  validate(silent = false): { isValid: boolean; errors: InputErrors[] } {
+  async validate(silent = false): Promise<{ isValid: boolean; errors: InputErrors[] }> {
     let areAllValid = true;
     const allErrors: InputErrors[] = [];
 
-    this.activeValidators.forEach((v) => {
-      const { isValid, element, errors } = v.validate(silent);
-      areAllValid = areAllValid && isValid;
+    // this.element.classList.add(this.props.validatingClass as string);
+    const validatorsList = [];
 
-      if (!isValid) {
-        v.showError();
+    for (let i = 0; i < this.activeValidators.length; i++) {
+      validatorsList.push(this.activeValidators[i].validate(silent));
+    }
 
-        allErrors.push({
-          element: element as HTMLElement,
-          errors: errors as string[],
-        });
-      } else {
-        v.clearError();
+    try {
+      const result = await Promise.all(validatorsList);
+      console.log(result);
+
+      for (let i = 0; i < result.length; i++) {
+        const { isValid, element, errors } = result[i];
+
+        areAllValid = areAllValid && isValid;
+        if (!isValid) {
+          this.activeValidators[i].showError();
+
+          allErrors.push({
+            element: element as HTMLElement,
+            errors: errors as string[],
+          });
+        } else {
+          this.activeValidators[i].clearError();
+        }
       }
-    });
 
-    return {
-      isValid: areAllValid,
-      errors: allErrors,
-    };
+      // this.element.classList.remove(this.props.validatingClass as string);
+
+      return {
+        isValid: areAllValid,
+        errors: allErrors,
+      };
+    } catch (err) {
+      console.error("We caught an error");
+    }
   }
 }

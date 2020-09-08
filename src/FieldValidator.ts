@@ -14,17 +14,43 @@ interface FieldValidatorProps {
   live: boolean;
   /** Class used to indicate that the user hasn't interacted with control yet */
   pristineClass: string;
+  /** Class used to indicate that an element is validating */
+  validatingClass: string;
+}
+
+function createDebouncedPromiseFunction() {
+  let counter = 0;
+
+  return async function <T>(promiseFunction: () => Promise<T>) {
+    counter++;
+    const myCounter = counter;
+    console.log("Called");
+    const result = await promiseFunction();
+
+    if (myCounter !== counter) {
+      console.log("rejected");
+    } else {
+      console.log("DONE");
+      return result;
+    }
+  };
+}
+
+function isInputElement(element: HTMLElement | HTMLInputElement): boolean {
+  return element instanceof HTMLInputElement;
 }
 
 export class FieldValidator {
-  element: HTMLElement;
+  element: HTMLElement | HTMLInputElement;
   errorRenderer: ErrorRenderer;
+  debouncedPromise = createDebouncedPromiseFunction();
   currentValidState: any;
   props: FieldValidatorProps;
+  prevValue: string = "";
   private validators: Rule[] = [];
 
   constructor(
-    element: HTMLElement,
+    element: HTMLElement | HTMLInputElement,
     rulesBlob: any[],
     errorRenderer: ErrorRenderer,
     props: FieldValidatorProps
@@ -32,6 +58,10 @@ export class FieldValidator {
     this.element = element;
     this.errorRenderer = errorRenderer;
     this.props = props;
+
+    if (this.element instanceof HTMLInputElement) {
+      this.prevValue = this.element.value;
+    }
 
     rulesBlob.forEach((rule) => {
       const ruleConstructor = rules.get(rule.name);
@@ -62,12 +92,22 @@ export class FieldValidator {
 
   onBlur = () => {
     if (!this.element.classList.contains(this.props.pristineClass)) {
-      this.validate(true);
+      if (this.element instanceof HTMLInputElement) {
+        if (this.element.value !== this.prevValue) {
+          this.validate(true);
+        }
+      } else {
+        this.validate(true);
+      }
     }
   };
 
   onChange = () => {
     this.element.classList.remove(this.props.pristineClass);
+
+    if (this.element instanceof HTMLInputElement) {
+      this.prevValue = this.element.value;
+    }
 
     this.validate(true);
   };
@@ -80,40 +120,56 @@ export class FieldValidator {
     this.errorRenderer.showError(this.currentValidState.errors[0]);
   }
 
-  validate(silent: boolean): ValidationState {
+  async checkAllValidators(): Promise<Rule[]> {
     const errors: Rule[] = [];
-
-    this.validators.forEach((v) => {
-      if (!v.validate()) {
-        errors.push(v);
+    for (let i = 0; i < this.validators.length; i++) {
+      const r = await Promise.resolve(this.validators[i].validate());
+      if (!r) {
+        errors.push(this.validators[i]);
       }
-    });
+    }
 
-    errors.sort((a, b) => {
-      return a.priority - b.priority;
-    });
+    return errors;
+  }
 
-    const errorMessages = errors.map((e) => {
-      return e.params.message;
-    });
-
-    const isValid = errors.length === 0;
-    // Save the current errors so
-    // that they can be displayed later
-    this.currentValidState = {
-      isValid,
-      errors: errorMessages,
-    };
-
+  toggleErrorMessage(isValid: boolean): void {
     if (isValid) {
       this.clearError();
     } else {
       this.showError();
     }
+  }
 
-    return {
-      ...this.currentValidState,
-      element: this.element,
-    };
+  extractErrorMessages(errors: Rule[]): string[] {
+    return errors
+      .sort((a, b) => {
+        return a.priority - b.priority;
+      })
+      .map((e) => e.params.message);
+  }
+
+  async validate(silent: boolean): Promise<ValidationState> {
+    this.element.classList.add(this.props.validatingClass);
+
+    const errors = await this.debouncedPromise<Rule[]>(this.checkAllValidators.bind(this));
+
+    if (errors) {
+      this.element.classList.remove(this.props.validatingClass);
+      const errorMessages = this.extractErrorMessages(errors);
+
+      this.currentValidState = {
+        errors: errorMessages,
+      };
+
+      this.toggleErrorMessage(errors.length === 0);
+
+      return {
+        isValid: errors.length === 0,
+        errors: errorMessages,
+        element: this.element,
+      };
+    } else {
+      // throw new Error("This is BAD YOOOO");
+    }
   }
 }

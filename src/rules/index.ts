@@ -1,4 +1,5 @@
 import { RequiredRule } from "./RequiredRule";
+import { AsyncRule } from "./AsyncRule";
 
 export interface Rule {
   name: string;
@@ -6,7 +7,7 @@ export interface Rule {
   element: HTMLElement | HTMLInputElement;
   params: Record<string, string>;
   getValue(): any;
-  validate(): boolean;
+  validate(): boolean | Promise<boolean>;
 }
 
 export type RuleType = new (...args: any[]) => Rule;
@@ -18,3 +19,4 @@ export function addRule(ruleName: string, rule: RuleType) {
 }
 
 addRule("required", RequiredRule);
+addRule("async", AsyncRule);
