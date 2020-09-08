@@ -22,6 +22,10 @@
         margin-top: 5px;
       }
 
+      .is-success {
+        border: 2px solid lightgreen;
+      }
+
       .is-validating {
         background-color: pink;
       }
@@ -56,49 +60,37 @@
           data-validate-required
           data-validate-required__message="This is required."
           data-validate-required__other="this is something else"
+          data-validate-length
+          data-validate-length__operation=">=4"
+          data-validate-length__message="This needs to have at least 4 characters"
         />
       </div>
 
       <div class="form-group">
-        <label>Last Name:</label>
+        <label>Username:</label>
         <input
           class=""
           type="text"
           name="lastName"
-          data-validate-colin
-          data-validate-colin__message="Username already taken, please choose another"
+          data-validate-username
+          data-validate-username__message="Username already taken, please choose another"
+          data-validate-required
+          data-validate-required__message="Please enter a username"
         />
         <span class="validating-message">validating</span>
       </div>
 
       <div class="form-group">
-        <label>Check username</label>
+        <label>City</label>
         <input
           type="text"
-          name="username"
-          data-validate-async
-          data-validate-async__name="username"
-          data-validate-async__message="This username is already taken"
+          name="city"
+          data-validate-length
+          data-validate-length__operation=">=4"
+          data-validate-length__message="This needs to have at least 4 characters"
         />
         <span class="validating-message">validating</span>
       </div>
-
-      <!-- <div class="form-group">
-        <label>Password:</label>
-        <input class="password" type="text" name="password" />
-      </div>
-
-      <div class="form-group">
-        <label>Confirm Password:</label>
-        <input
-          class=""
-          type="text"
-          name="confirmPassword"
-          data-validate-equal
-          data-validate-equal__message="This should match your password"
-          data-validate-equal__to="abc"
-        />
-      </div> -->
 
       <button type="submit">Submit</button>
       <button type="button" class="btn-manual">Run validation manually</button>

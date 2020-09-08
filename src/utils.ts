@@ -26,3 +26,21 @@ type RuleName = "required";
 export function toCamelCase(str: string): RuleName {
   return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()) as RuleName;
 }
+
+export function createDebouncedPromiseFunction() {
+  let counter = 0;
+
+  return async function <T>(promiseFunction: () => Promise<T>) {
+    counter++;
+    const myCounter = counter;
+    console.log("Called");
+    const result = await promiseFunction();
+
+    if (myCounter !== counter) {
+      console.log("rejected");
+    } else {
+      console.log("DONE");
+      return result;
+    }
+  };
+}

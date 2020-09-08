@@ -57,7 +57,5 @@ describe("class ErrorRenderer", () => {
     expect(parentElement.classList.contains(props.parentErrorClass)).toBeFalsy();
     errorRenderer.showError(errorMessage);
     expect(parentElement.classList.contains(props.parentErrorClass)).toBeTruthy();
-
-    screen.debug();
   });
 });

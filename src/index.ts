@@ -4,8 +4,6 @@ const form = document.querySelector<HTMLElement>("#form");
 const btnManual = document.querySelector<HTMLElement>(".btn-manual") as HTMLElement;
 let validate: Validate;
 
-import { Rule } from "./rules";
-
 function wait(timeout: number) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -15,7 +13,7 @@ function wait(timeout: number) {
 }
 
 if (form) {
-  Validate.registerValidatorRuleFunction("colin", async function (value: any) {
+  Validate.registerValidatorRuleFunction("username", 99, async function (value: any) {
     await wait(2000);
     if (typeof value === "string") {
       if (value !== "colin") {

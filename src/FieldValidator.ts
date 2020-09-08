@@ -1,5 +1,6 @@
 import { Rule, rules } from "./rules";
 import { ErrorRenderer } from "./ErrorRenderer";
+import { createDebouncedPromiseFunction } from "./utils";
 
 export interface ValidationState {
   isValid: boolean;
@@ -16,24 +17,6 @@ interface FieldValidatorProps {
   pristineClass: string;
   /** Class used to indicate that an element is validating */
   validatingClass: string;
-}
-
-function createDebouncedPromiseFunction() {
-  let counter = 0;
-
-  return async function <T>(promiseFunction: () => Promise<T>) {
-    counter++;
-    const myCounter = counter;
-    console.log("Called");
-    const result = await promiseFunction();
-
-    if (myCounter !== counter) {
-      console.log("rejected");
-    } else {
-      console.log("DONE");
-      return result;
-    }
-  };
 }
 
 function isInputElement(element: HTMLElement | HTMLInputElement): boolean {
@@ -63,18 +46,26 @@ export class FieldValidator {
       this.prevValue = this.element.value;
     }
 
-    rulesBlob.forEach((rule) => {
-      const ruleConstructor = rules.get(rule.name);
+    this.element.classList.add(this.props.pristineClass);
+    this.initValidators(rulesBlob);
+    this.attachEvents();
+  }
 
+  initValidators(activeRules: any[]) {
+    activeRules.forEach((rule) => {
+      const ruleConstructor = rules.get(rule.name);
       if (ruleConstructor) {
-        this.validators.push(new ruleConstructor(element, rule.params));
+        this.validators.push(new ruleConstructor(this.element, rule.params));
       } else {
         // throw new Error("No rule registered for rule: " + rule.name);
       }
     });
 
-    this.element.classList.add(this.props.pristineClass);
-    this.attachEvents();
+    this.validators = this.validators.sort((a, b) => {
+      return b.priority - a.priority;
+    });
+
+    console.log(this.validators);
   }
 
   attachEvents() {
@@ -124,8 +115,10 @@ export class FieldValidator {
     const errors: Rule[] = [];
     for (let i = 0; i < this.validators.length; i++) {
       const r = await Promise.resolve(this.validators[i].validate());
+
       if (!r) {
         errors.push(this.validators[i]);
+        return errors;
       }
     }
 
@@ -141,11 +134,7 @@ export class FieldValidator {
   }
 
   extractErrorMessages(errors: Rule[]): string[] {
-    return errors
-      .sort((a, b) => {
-        return a.priority - b.priority;
-      })
-      .map((e) => e.params.message);
+    return errors.map((e) => e.params.message);
   }
 
   async validate(silent: boolean): Promise<ValidationState> {

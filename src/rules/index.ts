@@ -1,4 +1,5 @@
 import { RequiredRule } from "./RequiredRule";
+import { LengthRule } from "./LengthRule";
 import { AsyncRule } from "./AsyncRule";
 
 export interface Rule {
@@ -20,3 +21,4 @@ export function addRule(ruleName: string, rule: RuleType) {
 
 addRule("required", RequiredRule);
 addRule("async", AsyncRule);
+addRule("length", LengthRule);

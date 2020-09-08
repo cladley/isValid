@@ -10,6 +10,7 @@ interface ValidateProps {
   parentErrorClass?: string;
   pristineClass?: string;
   validatingClass?: string;
+  successClass?: string;
   errorElementType: string;
   clearOnFocus: boolean;
   live: boolean;
@@ -27,6 +28,7 @@ const defaultProps = {
   parentErrorClass: "is-error",
   pristineClass: "is-pristine",
   validatingClass: "is-validating",
+  successClass: "is-success";
   errorClass: "error",
   errorElementType: "span",
   clearOnFocus: false,
@@ -43,11 +45,16 @@ export class Validate {
     addRule(ruleName, rule);
   }
 
-  static registerValidatorRuleFunction(ruleName: string, validateFunction: (value: any) => {}) {
+  static registerValidatorRuleFunction(
+    ruleName: string,
+    priority = 100,
+    validateFunction: (value: any) => {}
+  ) {
     const dynamicClass = function (element: HTMLElement, params: Record<string, string>) {
       this.element = element;
       this.params = params;
       this.name = ruleName;
+      this.priority = priority;
     };
 
     dynamicClass.prototype.getValue = function (): any {
