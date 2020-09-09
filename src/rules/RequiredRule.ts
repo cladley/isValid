@@ -6,14 +6,18 @@ export class RequiredRule implements Rule {
   priority = 100;
   name = "required";
 
-  constructor(element: HTMLElement, params: Record<string, string>) {
+  constructor(element: HTMLElement, params: Record<string, string> = {}) {
     this.element = element;
     this.params = params;
   }
 
   getValue(): any {
     if (this.element instanceof HTMLInputElement) {
-      return this.element.value;
+      if (this.element.type === "checkbox") {
+        return this.element.checked;
+      } else {
+        return this.element.value;
+      }
     }
 
     return this.element;

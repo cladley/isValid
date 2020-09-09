@@ -128,7 +128,6 @@ export class Validate {
 
     try {
       const result = await Promise.all(validatorsList);
-      console.log(result);
 
       for (let i = 0; i < result.length; i++) {
         const { isValid, element, errors } = result[i];

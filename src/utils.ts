@@ -44,3 +44,11 @@ export function createDebouncedPromiseFunction() {
     }
   };
 }
+
+export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
+  let timeoutId: number | null = null;
+  return function (this: any, ...args: any[]) {
+    clearTimeout(timeoutId as number);
+    timeoutId = window.setTimeout(() => fn.apply(this, args), delay);
+  } as F;
+}

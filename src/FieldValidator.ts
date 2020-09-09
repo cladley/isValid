@@ -1,6 +1,6 @@
 import { Rule, rules } from "./rules";
 import { ErrorRenderer } from "./ErrorRenderer";
-import { createDebouncedPromiseFunction } from "./utils";
+import { createDebouncedPromiseFunction, debounce } from "./utils";
 
 export interface ValidationState {
   isValid: boolean;
@@ -74,7 +74,7 @@ export class FieldValidator {
     }
 
     this.element.addEventListener("blur", this.onBlur);
-    this.element.addEventListener("input", this.onChange);
+    this.element.addEventListener("input", debounce(this.onChange, 250, false));
   }
 
   onFocus = () => {
@@ -159,6 +159,7 @@ export class FieldValidator {
       };
     } else {
       // throw new Error("This is BAD YOOOO");
+      return;
     }
   }
 }
