@@ -22,8 +22,8 @@
         margin-top: 5px;
       }
 
-      .is-success {
-        border: 2px solid lightgreen;
+      .is-valid {
+        border: 2px solid lawngreen;
       }
 
       .is-validating {
@@ -102,6 +102,20 @@
         />
       </div>
 
+      <div class="form-group">
+        <label>Please choose at least 2 items</label>
+
+        <div
+          data-validate-required-multiple
+          data-validate-required-multiple__operation=">=2"
+          data-validate-required-multiple__message="Please choose at least 2"
+        >
+          <input type="checkbox" />
+          <input type="checkbox" />
+          <input type="checkbox" />
+          <input type="checkbox" />
+        </div>
+      </div>
       <button type="submit">Submit</button>
       <button type="button" class="btn-manual">Run validation manually</button>
     </form>

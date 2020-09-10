@@ -33,14 +33,15 @@ export function createDebouncedPromiseFunction() {
   return async function <T>(promiseFunction: () => Promise<T>) {
     counter++;
     const myCounter = counter;
-    console.log("Called");
-    const result = await promiseFunction();
 
-    if (myCounter !== counter) {
-      console.log("rejected");
-    } else {
-      console.log("DONE");
-      return result;
+    try {
+      const result = await promiseFunction();
+
+      if (myCounter === counter) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 }
@@ -51,4 +52,14 @@ export function debounce<F extends (...params: any[]) => void>(fn: F, delay: num
     clearTimeout(timeoutId as number);
     timeoutId = window.setTimeout(() => fn.apply(this, args), delay);
   } as F;
+}
+
+export function isInputElement(
+  element: HTMLElement | HTMLInputElement
+): element is HTMLInputElement {
+  if ((element as HTMLInputElement).value) {
+    return true;
+  }
+
+  return false;
 }

@@ -7,6 +7,11 @@ export class RulesExtractor {
     this.prefix = prefix;
   }
 
+  /**
+   * Filters all dom elements under parent element
+   * that have data-validate attributes added to them.
+   * @param element {HTMLElement}
+   */
   filterElements(element: HTMLElement) {
     const re = new RegExp(`^${this.prefix}`);
 
@@ -26,6 +31,10 @@ export class RulesExtractor {
     return this.getRules(elements);
   }
 
+  /**
+   * @param element {HTMLElement}
+   * @param ruleName {string}
+   */
   getRuleParameters(element: HTMLElement, ruleName: string): any {
     const params = Object.create(null);
     const ruleParamsRe = new RegExp(`^${this.prefix}-${ruleName}__([a-z]+)$`, "i");
@@ -42,15 +51,15 @@ export class RulesExtractor {
   }
 
   getRules(elements: HTMLElement[]): any {
-    const ruleNameRe = new RegExp(`^${this.prefix}-([a-z]+)$`, "i");
+    const ruleNameRe = new RegExp(`^${this.prefix}-(?<ruleName>([a-z]+)(-([a-z]+))*)$`, "i");
     const elementRuleMap = new Map<HTMLElement, any[]>();
 
     elements.forEach((el: HTMLElement) => {
       Array.from(el.attributes).forEach((attr: Attr) => {
         const match = ruleNameRe.exec(attr.name);
 
-        if (match) {
-          const ruleNameString = match[1];
+        if (match && match.groups) {
+          const ruleNameString = match.groups.ruleName;
           const ruleName = toCamelCase(ruleNameString);
           const params = this.getRuleParameters(el, ruleNameString);
 

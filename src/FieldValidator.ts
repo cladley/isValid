@@ -1,6 +1,6 @@
 import { Rule, rules } from "./rules";
 import { ErrorRenderer } from "./ErrorRenderer";
-import { createDebouncedPromiseFunction, debounce } from "./utils";
+import { createDebouncedPromiseFunction, debounce, isInputElement } from "./utils";
 
 export interface ValidationState {
   isValid: boolean;
@@ -17,10 +17,7 @@ interface FieldValidatorProps {
   pristineClass: string;
   /** Class used to indicate that an element is validating */
   validatingClass: string;
-}
-
-function isInputElement(element: HTMLElement | HTMLInputElement): boolean {
-  return element instanceof HTMLInputElement;
+  validClass: string;
 }
 
 export class FieldValidator {
@@ -28,6 +25,7 @@ export class FieldValidator {
   errorRenderer: ErrorRenderer;
   debouncedPromise = createDebouncedPromiseFunction();
   currentValidState: any;
+  errors?: string[];
   props: FieldValidatorProps;
   prevValue: string = "";
   private validators: Rule[] = [];
@@ -42,7 +40,7 @@ export class FieldValidator {
     this.errorRenderer = errorRenderer;
     this.props = props;
 
-    if (this.element instanceof HTMLInputElement) {
+    if (isInputElement(this.element)) {
       this.prevValue = this.element.value;
     }
 
@@ -64,8 +62,6 @@ export class FieldValidator {
     this.validators = this.validators.sort((a, b) => {
       return b.priority - a.priority;
     });
-
-    console.log(this.validators);
   }
 
   attachEvents() {
@@ -74,7 +70,7 @@ export class FieldValidator {
     }
 
     this.element.addEventListener("blur", this.onBlur);
-    this.element.addEventListener("input", debounce(this.onChange, 250, false));
+    this.element.addEventListener("input", debounce(this.onChange, 250));
   }
 
   onFocus = () => {
@@ -82,14 +78,14 @@ export class FieldValidator {
   };
 
   onBlur = () => {
-    if (!this.element.classList.contains(this.props.pristineClass)) {
-      if (this.element instanceof HTMLInputElement) {
-        if (this.element.value !== this.prevValue) {
-          this.validate(true);
-        }
-      } else {
+    if (this.element.classList.contains(this.props.pristineClass)) return;
+
+    if (isInputElement(this.element)) {
+      if (this.element.value !== this.prevValue) {
         this.validate(true);
       }
+    } else {
+      this.validate(true);
     }
   };
 
@@ -100,6 +96,7 @@ export class FieldValidator {
       this.prevValue = this.element.value;
     }
 
+    this.element.classList.remove(this.props.validClass);
     this.validate(true);
   };
 
@@ -108,7 +105,9 @@ export class FieldValidator {
   }
 
   showError() {
-    this.errorRenderer.showError(this.currentValidState.errors[0]);
+    if (this.errors && this.errors.length > 0) {
+      this.errorRenderer.showError(this.errors[0]);
+    }
   }
 
   async checkAllValidators(): Promise<Rule[]> {
@@ -140,26 +139,30 @@ export class FieldValidator {
   async validate(silent: boolean): Promise<ValidationState> {
     this.element.classList.add(this.props.validatingClass);
 
-    const errors = await this.debouncedPromise<Rule[]>(this.checkAllValidators.bind(this));
+    try {
+      const errors = await this.debouncedPromise<Rule[]>(this.checkAllValidators.bind(this));
 
-    if (errors) {
-      this.element.classList.remove(this.props.validatingClass);
-      const errorMessages = this.extractErrorMessages(errors);
+      if (errors) {
+        this.element.classList.remove(this.props.validatingClass);
+        this.errors = this.extractErrorMessages(errors);
+        const isValid = this.errors.length === 0;
+        this.toggleErrorMessage(isValid);
 
-      this.currentValidState = {
-        errors: errorMessages,
-      };
+        if (isValid) {
+          this.element.classList.add(this.props.validClass);
+        }
 
-      this.toggleErrorMessage(errors.length === 0);
-
-      return {
-        isValid: errors.length === 0,
-        errors: errorMessages,
-        element: this.element,
-      };
-    } else {
-      // throw new Error("This is BAD YOOOO");
-      return;
+        return {
+          isValid,
+          errors: this.errors,
+          element: this.element,
+        };
+      } else {
+        // throw new Error("This is BAD YOOOO");
+        return;
+      }
+    } catch (error) {
+      debugger;
     }
   }
 }

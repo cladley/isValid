@@ -1,4 +1,5 @@
 import { RequiredRule } from "./RequiredRule";
+import { RequiredMultipleRule } from "./RequiredMultipleRule";
 import { LengthRule } from "./LengthRule";
 import { AsyncRule } from "./AsyncRule";
 
@@ -22,3 +23,4 @@ export function addRule(ruleName: string, rule: RuleType) {
 addRule("required", RequiredRule);
 addRule("async", AsyncRule);
 addRule("length", LengthRule);
+addRule("requiredMultiple", RequiredMultipleRule);

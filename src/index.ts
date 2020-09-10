@@ -14,6 +14,7 @@ function wait(timeout: number) {
 
 if (form) {
   Validate.registerValidatorRuleFunction("username", 99, async function (value: any) {
+    console.log("We get this far");
     await wait(2000);
     if (typeof value === "string") {
       if (value !== "colin") {
@@ -27,10 +28,12 @@ if (form) {
     parentSelector: ".form-group",
     errorClass: "error",
     onSubmit(event, isValid, errors) {
-      console.log(isValid);
-      console.log(errors);
-      event.preventDefault();
-      console.log("here we are");
+      if (isValid) {
+        console.log("We can submit the form");
+        // event.target.submit();
+      } else {
+        console.log("The form cannot be submitted");
+      }
     },
   });
 

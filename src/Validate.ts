@@ -10,10 +10,11 @@ interface ValidateProps {
   parentErrorClass?: string;
   pristineClass?: string;
   validatingClass?: string;
+  validClass?: string;
   successClass?: string;
-  errorElementType: string;
-  clearOnFocus: boolean;
-  live: boolean;
+  errorElementType?: string;
+  clearOnFocus?: boolean;
+  live?: boolean;
   onSubmit?(event: Event, isValid: boolean, errors: InputErrors[]): void;
 }
 
@@ -28,7 +29,7 @@ const defaultProps = {
   parentErrorClass: "is-error",
   pristineClass: "is-pristine",
   validatingClass: "is-validating",
-  successClass: "is-success";
+  validClass: "is-valid",
   errorClass: "error",
   errorElementType: "span",
   clearOnFocus: false,
@@ -94,7 +95,7 @@ export class Validate {
             errorClass: this.props.errorClass as string,
             parentSelector: this.props.parentSelector as string,
             parentErrorClass: this.props.parentErrorClass as string,
-            errorElementType: this.props.errorElementType,
+            errorElementType: this.props.errorElementType as string,
           }),
           this.props
         )
@@ -110,6 +111,7 @@ export class Validate {
 
   onFormSubmit = async (event: Event) => {
     if (this.props.onSubmit) {
+      event.preventDefault();
       const { isValid, errors } = await this.validate();
       this.props.onSubmit(event, isValid, errors);
     }
@@ -128,7 +130,6 @@ export class Validate {
 
     try {
       const result = await Promise.all(validatorsList);
-
       for (let i = 0; i < result.length; i++) {
         const { isValid, element, errors } = result[i];
 
