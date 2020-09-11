@@ -21,7 +21,7 @@ export class RequiredMultipleRule implements Rule {
   getValue(): any {}
 
   validate(): boolean {
-    const valueOperator = extractValueAndOperator(this.params.operation);
+    const valueOperator = extractValueAndOperator(this.params.ruleValue);
     const filledValues = this.inputs.filter((element) => {
       if (element.type === "checkbox") {
         return element.checked;

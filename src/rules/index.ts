@@ -1,6 +1,7 @@
 import { RequiredRule } from "./RequiredRule";
 import { RequiredMultipleRule } from "./RequiredMultipleRule";
 import { LengthRule } from "./LengthRule";
+import { RegexRule } from "./RegexRule";
 import { AsyncRule } from "./AsyncRule";
 
 export interface Rule {
@@ -21,6 +22,7 @@ export function addRule(ruleName: string, rule: RuleType) {
 }
 
 addRule("required", RequiredRule);
+addRule("requiredMultiple", RequiredMultipleRule);
 addRule("async", AsyncRule);
 addRule("length", LengthRule);
-addRule("requiredMultiple", RequiredMultipleRule);
+addRule("regex", RegexRule);

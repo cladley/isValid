@@ -61,7 +61,8 @@ export class RulesExtractor {
         if (match && match.groups) {
           const ruleNameString = match.groups.ruleName;
           const ruleName = toCamelCase(ruleNameString);
-          const params = this.getRuleParameters(el, ruleNameString);
+          const ruleValue = attr.value;
+          const params = { ruleValue, ...this.getRuleParameters(el, ruleNameString) };
 
           const currentRules = elementRuleMap.has(el)
             ? [...(elementRuleMap.get(el) as []), { name: ruleName, params: { ...params } }]

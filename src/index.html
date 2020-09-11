@@ -59,9 +59,7 @@
           name="firstName"
           data-validate-required
           data-validate-required__message="This is required."
-          data-validate-required__other="this is something else"
-          data-validate-length
-          data-validate-length__operation=">=4"
+          data-validate-length=">=4"
           data-validate-length__message="This needs to have at least 4 characters"
         />
       </div>
@@ -85,8 +83,7 @@
         <input
           type="text"
           name="city"
-          data-validate-length
-          data-validate-length__operation=">=4"
+          data-validate-length=">=4"
           data-validate-length__message="This needs to have at least 4 characters"
         />
         <span class="validating-message">validating</span>
@@ -103,11 +100,22 @@
       </div>
 
       <div class="form-group">
+        <label>Email:</label>
+        <input
+          type="text"
+          name="email"
+          data-validate-regex="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+          data-validate-regex__flags="i"
+          ;
+          data-validate-regex__message="Please enter a valid email"
+        />
+      </div>
+
+      <div class="form-group">
         <label>Please choose at least 2 items</label>
 
         <div
-          data-validate-required-multiple
-          data-validate-required-multiple__operation=">=2"
+          data-validate-required-multiple=">=2"
           data-validate-required-multiple__message="Please choose at least 2"
         >
           <input type="checkbox" />

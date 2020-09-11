@@ -1,4 +1,4 @@
-export const extractValueAndOperator = (valueOp: string): { operator: string; value: number } => {
+export function extractValueAndOperator(valueOp: string): { operator: string; value: number } {
   if (valueOp.trim() === "")
     throw new Error("Please supply a valid number to required-multiple rule");
 
@@ -19,12 +19,16 @@ export const extractValueAndOperator = (valueOp: string): { operator: string; va
   }
 
   return { operator, value };
-};
+}
 
 type RuleName = "required";
 
 export function toCamelCase(str: string): RuleName {
   return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase()) as RuleName;
+}
+
+export function escapeRegex(str: string): string {
+  return str.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, "\\$&");
 }
 
 export function createDebouncedPromiseFunction() {

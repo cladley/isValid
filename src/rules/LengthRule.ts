@@ -9,6 +9,7 @@ export class LengthRule implements Rule {
 
   constructor(element: HTMLElement, params: Record<string, string>) {
     this.element = element;
+    console.log(params);
     this.params = params;
   }
 
@@ -21,7 +22,7 @@ export class LengthRule implements Rule {
 
   validate(): boolean {
     const value = this.getValue();
-    const valueOperator = extractValueAndOperator(this.params.operation);
+    const valueOperator = extractValueAndOperator(this.params.ruleValue);
     return eval(`${value.trim().length} ${valueOperator.operator} ${valueOperator.value}`);
   }
 }
