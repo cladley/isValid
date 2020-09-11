@@ -1,6 +1,6 @@
 import { Rule, rules } from "./rules";
-import { ErrorRenderer } from "./ErrorRenderer";
 import { createDebouncedPromiseFunction, debounce, isInputElement } from "./utils";
+import { FieldRenderer } from "./FieldRenderer";
 
 export interface ValidationState {
   isValid: boolean;
@@ -20,9 +20,16 @@ interface FieldValidatorProps {
   validClass: string;
 }
 
+export enum FieldState {
+  isValid,
+  isValiding,
+  isError,
+  isPristine,
+}
+
 export class FieldValidator {
   element: HTMLElement | HTMLInputElement;
-  errorRenderer: ErrorRenderer;
+  fieldRenderer: FieldRenderer;
   debouncedPromise = createDebouncedPromiseFunction();
   currentValidState: any;
   errors?: string[];
@@ -33,18 +40,17 @@ export class FieldValidator {
   constructor(
     element: HTMLElement | HTMLInputElement,
     rulesBlob: any[],
-    errorRenderer: ErrorRenderer,
     props: FieldValidatorProps
   ) {
     this.element = element;
-    this.errorRenderer = errorRenderer;
     this.props = props;
+    this.fieldRenderer = new FieldRenderer(this.element, this.props);
 
     if (isInputElement(this.element)) {
       this.prevValue = this.element.value;
     }
 
-    this.element.classList.add(this.props.pristineClass);
+    this.fieldRenderer.fieldState = FieldState.isPristine;
     this.initValidators(rulesBlob);
     this.attachEvents();
   }
@@ -78,7 +84,7 @@ export class FieldValidator {
   };
 
   onBlur = () => {
-    if (this.element.classList.contains(this.props.pristineClass)) return;
+    if (this.fieldRenderer.fieldState === FieldState.isPristine) return;
 
     if (isInputElement(this.element)) {
       if (this.element.value !== this.prevValue) {
@@ -90,23 +96,21 @@ export class FieldValidator {
   };
 
   onChange = () => {
-    this.element.classList.remove(this.props.pristineClass);
-
-    if (this.element instanceof HTMLInputElement) {
+    if (isInputElement(this.element)) {
       this.prevValue = this.element.value;
     }
 
-    this.element.classList.remove(this.props.validClass);
+    this.fieldRenderer.fieldState = FieldState.isValiding;
     this.validate(true);
   };
 
   clearError() {
-    this.errorRenderer.clearError();
+    this.fieldRenderer.hideError();
   }
 
   showError() {
     if (this.errors && this.errors.length > 0) {
-      this.errorRenderer.showError(this.errors[0]);
+      this.fieldRenderer.showError(this.errors[0]);
     }
   }
 
@@ -137,8 +141,6 @@ export class FieldValidator {
   }
 
   async validate(silent: boolean): Promise<ValidationState> {
-    this.element.classList.add(this.props.validatingClass);
-
     try {
       const errors = await this.debouncedPromise<Rule[]>(this.checkAllValidators.bind(this));
 
@@ -149,7 +151,9 @@ export class FieldValidator {
         this.toggleErrorMessage(isValid);
 
         if (isValid) {
-          this.element.classList.add(this.props.validClass);
+          this.fieldRenderer.fieldState = FieldState.isValid;
+        } else {
+          this.fieldRenderer.fieldState = FieldState.isError;
         }
 
         return {
@@ -161,8 +165,6 @@ export class FieldValidator {
         // throw new Error("This is BAD YOOOO");
         return;
       }
-    } catch (error) {
-      debugger;
-    }
+    } catch (error) {}
   }
 }

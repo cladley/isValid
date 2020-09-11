@@ -26,7 +26,7 @@ if (form) {
 
   validate = new Validate(form, {
     parentSelector: ".form-group",
-    errorClass: "error",
+    errorClass: "is-error",
     onSubmit(event, isValid, errors) {
       if (isValid) {
         console.log("We can submit the form");

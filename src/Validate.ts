@@ -1,6 +1,5 @@
 import { RulesExtractor } from "./RulesExtractor";
 import { FieldValidator } from "./FieldValidator";
-import { ErrorRenderer } from "./ErrorRenderer";
 import { addRule, RuleType, Rule } from "./rules";
 
 interface ValidateProps {
@@ -11,7 +10,7 @@ interface ValidateProps {
   pristineClass?: string;
   validatingClass?: string;
   validClass?: string;
-  successClass?: string;
+  errorElementClass?: string;
   errorElementType?: string;
   clearOnFocus?: boolean;
   live?: boolean;
@@ -26,11 +25,11 @@ interface InputErrors {
 const defaultProps = {
   prefix: "data-validate",
   parentSelector: ".form-group",
-  parentErrorClass: "is-error",
+  errorClass: "is-error",
   pristineClass: "is-pristine",
   validatingClass: "is-validating",
   validClass: "is-valid",
-  errorClass: "error",
+  errorElementClass: "error",
   errorElementType: "span",
   clearOnFocus: false,
   live: false,
@@ -87,19 +86,7 @@ export class Validate {
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
 
     for (const [element, rules] of elementRules) {
-      this.activeValidators.push(
-        new FieldValidator(
-          element,
-          rules,
-          new ErrorRenderer(element, {
-            errorClass: this.props.errorClass as string,
-            parentSelector: this.props.parentSelector as string,
-            parentErrorClass: this.props.parentErrorClass as string,
-            errorElementType: this.props.errorElementType as string,
-          }),
-          this.props
-        )
-      );
+      this.activeValidators.push(new FieldValidator(element, rules, this.props));
     }
   }
 
@@ -120,8 +107,6 @@ export class Validate {
   async validate(silent = false): Promise<{ isValid: boolean; errors: InputErrors[] }> {
     let areAllValid = true;
     const allErrors: InputErrors[] = [];
-
-    // this.element.classList.add(this.props.validatingClass as string);
     const validatorsList = [];
 
     for (let i = 0; i < this.activeValidators.length; i++) {
@@ -145,8 +130,6 @@ export class Validate {
           this.activeValidators[i].clearError();
         }
       }
-
-      // this.element.classList.remove(this.props.validatingClass as string);
 
       return {
         isValid: areAllValid,
