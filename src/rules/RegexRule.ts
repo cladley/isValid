@@ -13,11 +13,10 @@ export class RegexRule implements Rule {
     this.params = params;
 
     this.regExp = new RegExp(this.params.ruleValue, this.params.flags);
-    console.log(this.regExp);
   }
 
   getValue(): any {
-    if (isInputElement(this.element)) {
+    if (this.element instanceof HTMLInputElement) {
       return this.element.value;
     }
   }

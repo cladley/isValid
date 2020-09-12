@@ -9,7 +9,6 @@ export class LengthRule implements Rule {
 
   constructor(element: HTMLElement, params: Record<string, string>) {
     this.element = element;
-    console.log(params);
     this.params = params;
   }
 

@@ -11,7 +11,7 @@ describe("'required' rule", () => {
       input.type = "text";
       input.value = stringValue;
 
-      lengthRule = new LengthRule(input, { operation: ">=4" });
+      lengthRule = new LengthRule(input, { ruleValue: ">=4" });
     });
 
     it("should return the value of text when dealing with text input", () => {
@@ -35,7 +35,7 @@ describe("'required' rule", () => {
   describe("testing operation of <3", () => {
     beforeEach(() => {
       input = document.createElement("input");
-      lengthRule = new LengthRule(input, { operation: "<3" });
+      lengthRule = new LengthRule(input, { ruleValue: "<3" });
     });
 
     it("Should pass validation when it contains less than 3 characters", () => {
