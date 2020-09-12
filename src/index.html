@@ -72,8 +72,6 @@
           name="lastName"
           data-validate-username
           data-validate-username__message="Username already taken, please choose another"
-          data-validate-required
-          data-validate-required__message="Please enter a username"
         />
         <span class="validating-message">validating</span>
       </div>
@@ -106,8 +104,28 @@
           name="email"
           data-validate-regex="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
           data-validate-regex__flags="i"
-          ;
           data-validate-regex__message="Please enter a valid email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          class="password"
+          data-validate-required=""
+          data-validate-required__message="Please enter a password"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          data-validate-required=""
+          data-validate-required__message="Please enter a password"
+          data-validate-match=".password"
+          data-validate-match__message="Confirm password doesnt match password"
         />
       </div>
 

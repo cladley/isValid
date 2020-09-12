@@ -100,7 +100,6 @@ export class FieldValidator {
       this.prevValue = this.element.value;
     }
 
-    this.fieldRenderer.fieldState = FieldState.isValiding;
     this.validate(true);
   };
 
@@ -141,6 +140,8 @@ export class FieldValidator {
   }
 
   async validate(silent: boolean): Promise<ValidationState> {
+    this.fieldRenderer.fieldState = FieldState.isValiding;
+
     try {
       const errors = await this.debouncedPromise<Rule[]>(this.checkAllValidators.bind(this));
 
