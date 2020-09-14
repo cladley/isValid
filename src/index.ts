@@ -38,6 +38,6 @@ if (form) {
   });
 
   btnManual.addEventListener("click", () => {
-    validate.validate();
+    validate.validate(true);
   });
 }

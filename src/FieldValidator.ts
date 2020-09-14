@@ -4,8 +4,8 @@ import { FieldRenderer } from "./FieldRenderer";
 
 export interface ValidationState {
   isValid: boolean;
-  errors?: string[];
-  element?: HTMLElement;
+  errors: string[];
+  element: HTMLElement;
 }
 
 interface FieldValidatorProps {
@@ -32,9 +32,10 @@ export class FieldValidator {
   fieldRenderer: FieldRenderer;
   debouncedPromise = createDebouncedPromiseFunction();
   currentValidState: any;
-  errors?: string[];
+  errors: string[] = [];
   props: FieldValidatorProps;
   prevValue: string = "";
+  hasChangedSinceLastValidation: boolean = true;
   private validators: Rule[] = [];
 
   constructor(
@@ -76,7 +77,7 @@ export class FieldValidator {
     }
 
     this.element.addEventListener("blur", this.onBlur);
-    this.element.addEventListener("input", debounce(this.onChange, 250));
+    this.element.addEventListener("input", debounce(this.onChange, 200));
   }
 
   onFocus = () => {
@@ -96,10 +97,10 @@ export class FieldValidator {
   };
 
   onChange = () => {
+    this.hasChangedSinceLastValidation = true;
     if (isInputElement(this.element)) {
       this.prevValue = this.element.value;
     }
-
     this.validate(true);
   };
 
@@ -139,14 +140,22 @@ export class FieldValidator {
     return errors.map((e) => e.params.message);
   }
 
-  async validate(silent: boolean): Promise<ValidationState> {
+  async validate(force: boolean): Promise<ValidationState> {
+    if (!this.hasChangedSinceLastValidation && !force) {
+      return {
+        isValid: this.errors.length === 0,
+        errors: this.errors,
+        element: this.element,
+      };
+    }
+
     this.fieldRenderer.fieldState = FieldState.isValiding;
 
     try {
       const errors = await this.debouncedPromise<Rule[]>(this.checkAllValidators.bind(this));
 
       if (errors) {
-        this.element.classList.remove(this.props.validatingClass);
+        // this.element.classList.remove(this.props.validatingClass);
         this.errors = this.extractErrorMessages(errors);
         const isValid = this.errors.length === 0;
         this.toggleErrorMessage(isValid);
@@ -156,6 +165,8 @@ export class FieldValidator {
         } else {
           this.fieldRenderer.fieldState = FieldState.isError;
         }
+
+        this.hasChangedSinceLastValidation = false;
 
         return {
           isValid,

@@ -18,6 +18,12 @@ export class RequiredRule implements Rule {
       } else {
         return this.element.value;
       }
+    } else if (this.element instanceof HTMLSelectElement) {
+      if (this.element.selectedIndex) {
+        return this.element.options[this.element.selectedIndex].value;
+      } else {
+        return false;
+      }
     }
 
     return this.element;

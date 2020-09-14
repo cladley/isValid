@@ -1,6 +1,10 @@
 import { RulesExtractor } from "./RulesExtractor";
 import { FieldValidator } from "./FieldValidator";
-import { addRule, RuleType, Rule } from "./rules";
+import { addRule, RuleType } from "./rules";
+
+interface SubmitEvent extends Event {
+  submitter: HTMLElement;
+}
 
 interface ValidateProps {
   prefix?: string;
@@ -48,29 +52,56 @@ export class Validate {
   static registerValidatorRuleFunction(
     ruleName: string,
     priority = 100,
-    validateFunction: (value: any) => {}
+    validateFunction: (value: any) => boolean | Promise<boolean | undefined>
   ) {
-    const dynamicClass = function (element: HTMLElement, params: Record<string, string>) {
-      this.element = element;
-      this.params = params;
-      this.name = ruleName;
-      this.priority = priority;
-    };
+    // const DynamicClass = function (element: HTMLElement, params: Record<string, string>) {
+    //   this.element = element;
+    //   this.params = params;
+    //   this.name = ruleName;
+    //   this.priority = priority;
+    // };
 
-    dynamicClass.prototype.getValue = function (): any {
-      if (this.element instanceof HTMLInputElement) {
-        return this.element.value;
+    class DynamicClass {
+      element: HTMLElement;
+      params: Record<string, string>;
+      priority: number;
+      name: string;
+
+      constructor(element: HTMLElement, params: Record<string, string>) {
+        this.element = element;
+        this.params = params;
+        this.name = ruleName;
+        this.priority = priority;
       }
 
-      return this.element;
-    };
+      getValue() {
+        if (this.element instanceof HTMLInputElement) {
+          return this.element.value;
+        }
 
-    dynamicClass.prototype.validate = function () {
-      const value = this.getValue();
-      return validateFunction(value);
-    };
+        return this.element;
+      }
 
-    addRule(ruleName, dynamicClass);
+      validate(): boolean | Promise<boolean | undefined> {
+        const value = this.getValue();
+        return validateFunction(value);
+      }
+    }
+
+    // DynamicClass.prototype.getValue = function (): any {
+    //   if (this.element instanceof HTMLInputElement) {
+    //     return this.element.value;
+    //   }
+
+    //   return this.element;
+    // };
+
+    // DynamicClass.prototype.validate = function () {
+    //   const value = this.getValue();
+    //   return validateFunction(value);
+    // };
+
+    addRule(ruleName, DynamicClass);
   }
 
   constructor(element: HTMLElement, props: ValidateProps) {
@@ -83,6 +114,9 @@ export class Validate {
   }
 
   init() {
+    this.element.setAttribute("aria-live", "assertive");
+    this.element.setAttribute("aria-relevant", "addition removals");
+    this.element.setAttribute("novalidate", "");
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
 
     for (const [element, rules] of elementRules) {
@@ -99,18 +133,22 @@ export class Validate {
   onFormSubmit = async (event: Event) => {
     if (this.props.onSubmit) {
       event.preventDefault();
+      event.submitter.setAttribute("disabled", "");
+      this.element.classList.add(this.props.validatingClass as string);
       const { isValid, errors } = await this.validate();
+      this.element.classList.remove(this.props.validatingClass as string);
+      event.submitter.removeAttribute("disabled");
       this.props.onSubmit(event, isValid, errors);
     }
   };
 
-  async validate(silent = false): Promise<{ isValid: boolean; errors: InputErrors[] }> {
+  async validate(force = false): Promise<{ isValid: boolean; errors: InputErrors[] }> {
     let areAllValid = true;
     const allErrors: InputErrors[] = [];
     const validatorsList = [];
 
     for (let i = 0; i < this.activeValidators.length; i++) {
-      validatorsList.push(this.activeValidators[i].validate(silent));
+      validatorsList.push(this.activeValidators[i].validate(force));
     }
 
     try {
@@ -136,7 +174,7 @@ export class Validate {
         errors: allErrors,
       };
     } catch (err) {
-      console.error("We caught an error");
+      throw new Error("asd");
     }
   }
 }

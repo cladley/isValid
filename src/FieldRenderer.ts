@@ -49,6 +49,7 @@ export class FieldRenderer {
         break;
       case FieldState.isValid:
         this.element.classList.add(this.props.validClass);
+        this.element.setAttribute("aria-invalid", "false");
         this.parentElement?.classList.add(this.props.validClass);
         break;
       case FieldState.isValiding:
@@ -57,6 +58,7 @@ export class FieldRenderer {
         break;
       case FieldState.isError:
         this.element.classList.add(this.props.errorClass);
+        this.element.setAttribute("aria-invalid", "true");
         this.parentElement?.classList.add(this.props.errorClass);
         break;
     }
