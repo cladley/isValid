@@ -1,4 +1,3 @@
-import { Rule } from "./index";
 import { RegexRule } from "./RegexRule";
 
 const emailRegexString = "([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$";

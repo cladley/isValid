@@ -54,13 +54,6 @@ export class Validate {
     priority = 100,
     validateFunction: (value: any) => boolean | Promise<boolean | undefined>
   ) {
-    // const DynamicClass = function (element: HTMLElement, params: Record<string, string>) {
-    //   this.element = element;
-    //   this.params = params;
-    //   this.name = ruleName;
-    //   this.priority = priority;
-    // };
-
     class DynamicClass {
       element: HTMLElement;
       params: Record<string, string>;
@@ -87,19 +80,6 @@ export class Validate {
         return validateFunction(value);
       }
     }
-
-    // DynamicClass.prototype.getValue = function (): any {
-    //   if (this.element instanceof HTMLInputElement) {
-    //     return this.element.value;
-    //   }
-
-    //   return this.element;
-    // };
-
-    // DynamicClass.prototype.validate = function () {
-    //   const value = this.getValue();
-    //   return validateFunction(value);
-    // };
 
     addRule(ruleName, DynamicClass);
   }
