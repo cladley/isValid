@@ -120,6 +120,7 @@ export class Validate {
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
 
     for (const [element, rules] of elementRules) {
+      console.log(rules);
       this.activeValidators.push(new FieldValidator(element, rules, this.props));
     }
   }

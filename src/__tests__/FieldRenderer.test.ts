@@ -87,4 +87,12 @@ describe("class FieldRenderer", () => {
     el = document.querySelector("." + props.validClass);
     expect(el).toBeTruthy();
   });
+
+  it("should add pristine class when fieldState is set to isPristine", () => {
+    let el = document.querySelector("." + props.pristineClass);
+    expect(el).toBeFalsy();
+    fieldRenderer.fieldState = FieldState.isPristine;
+    el = document.querySelector("." + props.pristineClass);
+    expect(el).toBeTruthy();
+  });
 });
