@@ -52,4 +52,33 @@ describe("'required' rule", () => {
       expect(requiedRule.validate()).toEqual(true);
     });
   });
+
+  describe("attached to select box", () => {
+    let select: HTMLSelectElement;
+    let requiredRule: RequiredRule;
+
+    const htmlSelectString = `
+      <select id="select">
+        <option value="">--</option>
+        <option value="mr">Mr</option>
+        <option value="mrs">Mrs</option>
+        <option value="miss">Miss</option>
+      </select> 
+    `;
+
+    beforeEach(() => {
+      document.body.innerHTML = htmlSelectString;
+      select = document.querySelector<HTMLSelectElement>("select") as HTMLSelectElement;
+      requiredRule = new RequiredRule(select);
+    });
+
+    it("should fail validation if not value is selected", () => {
+      expect(requiredRule.validate()).toEqual(false);
+    });
+
+    it("should pass validation when an option has been selected", () => {
+      select.selectedIndex = 1;
+      expect(requiredRule.validate()).toEqual(true);
+    });
+  });
 });
