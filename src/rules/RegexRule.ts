@@ -6,12 +6,13 @@ export class RegexRule implements Rule {
   params: Record<string, string>;
   priority = 99;
   name = "regex";
+  message = "";
   regExp: RegExp;
 
   constructor(element: HTMLElement, params: Record<string, string> = {}) {
     this.element = element;
     this.params = params;
-
+    this.message = this.params.message;
     this.regExp = new RegExp(this.params.ruleValue, this.params.flags);
   }
 

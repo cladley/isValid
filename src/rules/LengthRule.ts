@@ -6,10 +6,12 @@ export class LengthRule implements Rule {
   params: Record<string, string>;
   priority = 99;
   name = "length";
+  message = "";
 
   constructor(element: HTMLElement, params: Record<string, string>) {
     this.element = element;
     this.params = params;
+    this.message = this.params.message;
   }
 
   getValue(): any {

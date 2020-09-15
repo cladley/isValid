@@ -7,6 +7,7 @@ export class RequiredMultipleRule implements Rule {
   params: Record<string, string>;
   priority = 100;
   name = "requiredMultiple";
+  message = "";
 
   constructor(element: HTMLElement, params: Record<string, string> = {}) {
     this.element = element;
@@ -16,6 +17,7 @@ export class RequiredMultipleRule implements Rule {
       throw new Error("Some error about requiredMultiple");
     }
     this.params = params;
+    this.message = this.params.message;
   }
 
   getValue(): any {}

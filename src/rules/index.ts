@@ -11,6 +11,7 @@ export interface Rule {
   priority: number;
   element: HTMLElement | HTMLInputElement;
   params: Record<string, string>;
+  message: string;
   getValue(): any;
   validate(): boolean | Promise<boolean | undefined>;
 }

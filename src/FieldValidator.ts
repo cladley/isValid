@@ -137,7 +137,9 @@ export class FieldValidator {
   }
 
   extractErrorMessages(errors: Rule[]): string[] {
-    return errors.map((e) => e.params.message);
+    return errors.map((e) => {
+      return e.message;
+    });
   }
 
   async validate(force: boolean): Promise<ValidationState> {

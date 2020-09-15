@@ -2,9 +2,13 @@ import { RulesExtractor } from "./RulesExtractor";
 import { FieldValidator } from "./FieldValidator";
 import { addRule, RuleType } from "./rules";
 
-interface SubmitEvent extends Event {
-  submitter: HTMLElement;
-}
+// interface SubmitEvent extends Event {
+//   submitter: HTMLElement;
+// }
+
+// interface HTMLFormElement {
+//   onsubmit: (this: GlobalEventHandlers, ev: SubmitEvent) => any | null;
+// }
 
 interface ValidateProps {
   prefix?: string;
@@ -40,7 +44,7 @@ const defaultProps = {
 };
 
 export class Validate {
-  element: HTMLElement;
+  element: HTMLFormElement;
   props: ValidateProps;
   rulesExtractor: RulesExtractor;
   activeValidators: FieldValidator[] = [];
@@ -52,19 +56,35 @@ export class Validate {
   static registerValidatorRuleFunction(
     ruleName: string,
     priority = 100,
-    validateFunction: (value: any) => boolean | Promise<boolean | undefined>
+    validateFunction: (
+      value: any,
+      setMessage: (value: string) => void,
+      restoreMessage: () => void
+    ) => boolean | Promise<boolean | undefined>
   ) {
     class DynamicClass {
       element: HTMLElement;
       params: Record<string, string>;
       priority: number;
       name: string;
+      originalMessage: string;
+      message: string;
 
       constructor(element: HTMLElement, params: Record<string, string>) {
         this.element = element;
         this.params = params;
         this.name = ruleName;
         this.priority = priority;
+        this.originalMessage = this.params.message;
+        this.message = this.params.message;
+      }
+
+      setMessage(value: string) {
+        this.message = value;
+      }
+
+      restoreMessage() {
+        this.message = this.originalMessage;
       }
 
       getValue() {
@@ -77,14 +97,14 @@ export class Validate {
 
       validate(): boolean | Promise<boolean | undefined> {
         const value = this.getValue();
-        return validateFunction(value);
+        return validateFunction(value, this.setMessage.bind(this), this.restoreMessage.bind(this));
       }
     }
 
     addRule(ruleName, DynamicClass);
   }
 
-  constructor(element: HTMLElement, props: ValidateProps) {
+  constructor(element: HTMLFormElement, props: ValidateProps) {
     this.element = element;
     this.props = { ...defaultProps, ...props };
     this.rulesExtractor = new RulesExtractor(this.props.prefix);
