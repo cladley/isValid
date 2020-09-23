@@ -1,8 +1,7 @@
-import { Validate } from "./Validate";
-import { Rule } from "./rules";
+import { Validate } from './Validate';
 
-const form = document.querySelector<HTMLFormElement>("#form");
-const btnManual = document.querySelector<HTMLElement>(".btn-manual") as HTMLElement;
+const form = document.querySelector<HTMLFormElement>('#form');
+const btnManual = document.querySelector<HTMLElement>('.btn-manual') as HTMLElement;
 let validate: Validate;
 
 function wait(timeout: number) {
@@ -14,18 +13,18 @@ function wait(timeout: number) {
 }
 
 if (form) {
-  Validate.registerValidatorRuleFunction("username", 99, async function (
+  Validate.registerValidatorRuleFunction('username', 99, async function (
     value: any,
     setMessage,
     restoreMessage
   ) {
     await wait(2000);
-    if (typeof value === "string") {
-      if (value === "colin") {
-        setMessage("Come on man, colin has already been used");
+    if (typeof value === 'string') {
+      if (value === 'colin') {
+        setMessage('Come on man, colin has already been used');
         return false;
-      } else if (value === "ladley") {
-        setMessage("Ladley been used aswell");
+      } else if (value === 'ladley') {
+        setMessage('Ladley been used aswell');
         return false;
       } else {
         return true;
@@ -34,19 +33,20 @@ if (form) {
   });
 
   validate = new Validate(form, {
-    parentSelector: ".form-group",
-    errorClass: "is-error",
+    parentSelector: '.form-group',
+    errorClass: 'is-error',
+    clearOnFocus: true,
     onSubmit(event, isValid, errors) {
       if (isValid) {
-        console.log("We can submit the form");
+        console.log('We can submit the form');
         // event.target.submit();
       } else {
-        console.log("The form cannot be submitted");
+        console.log('The form cannot be submitted');
       }
     },
   });
 
-  btnManual.addEventListener("click", () => {
+  btnManual.addEventListener('click', () => {
     validate.validate(true);
   });
 }

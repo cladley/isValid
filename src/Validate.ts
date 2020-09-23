@@ -1,6 +1,6 @@
-import { RulesExtractor } from "./RulesExtractor";
-import { FieldValidator } from "./FieldValidator";
-import { addRule, RuleType } from "./rules";
+import { RulesExtractor } from './RulesExtractor';
+import { FieldValidator } from './FieldValidator';
+import { addRule, RuleType } from './rules';
 
 // interface SubmitEvent extends Event {
 //   submitter: HTMLElement;
@@ -31,14 +31,14 @@ interface InputErrors {
 }
 
 const defaultProps = {
-  prefix: "data-validate",
-  parentSelector: ".form-group",
-  errorClass: "is-error",
-  pristineClass: "is-pristine",
-  validatingClass: "is-validating",
-  validClass: "is-valid",
-  errorElementClass: "error",
-  errorElementType: "span",
+  prefix: 'data-validate',
+  parentSelector: '.form-group',
+  errorClass: 'is-error',
+  pristineClass: 'is-pristine',
+  validatingClass: 'is-validating',
+  validClass: 'is-valid',
+  errorElementClass: 'error',
+  errorElementType: 'span',
   clearOnFocus: false,
   live: false,
 };
@@ -114,11 +114,11 @@ export class Validate {
   }
 
   init() {
-    this.element.setAttribute("aria-live", "assertive");
-    this.element.setAttribute("aria-relevant", "addition removals");
-    this.element.setAttribute("novalidate", "");
+    this.element.setAttribute('aria-live', 'assertive');
+    this.element.setAttribute('aria-relevant', 'addition removals');
+    this.element.setAttribute('novalidate', '');
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
-
+    console.log(elementRules);
     for (const [element, rules] of elementRules) {
       console.log(rules);
       this.activeValidators.push(new FieldValidator(element, rules, this.props));
@@ -127,18 +127,18 @@ export class Validate {
 
   attachEvents() {
     if (this.props.onSubmit) {
-      this.element.addEventListener("submit", this.onFormSubmit);
+      this.element.addEventListener('submit', this.onFormSubmit);
     }
   }
 
   onFormSubmit = async (event: Event) => {
     if (this.props.onSubmit) {
       event.preventDefault();
-      event.submitter.setAttribute("disabled", "");
+      event.submitter.setAttribute('disabled', '');
       this.element.classList.add(this.props.validatingClass as string);
       const { isValid, errors } = await this.validate();
       this.element.classList.remove(this.props.validatingClass as string);
-      event.submitter.removeAttribute("disabled");
+      event.submitter.removeAttribute('disabled');
       this.props.onSubmit(event, isValid, errors);
     }
   };
@@ -175,7 +175,7 @@ export class Validate {
         errors: allErrors,
       };
     } catch (err) {
-      throw new Error("asd");
+      throw new Error('asd');
     }
   }
 }

@@ -1,9 +1,9 @@
-import { toCamelCase } from "./utils";
+import { toCamelCase } from './utils';
 
 export class RulesExtractor {
   prefix: string;
 
-  constructor(prefix: string = "data-validate") {
+  constructor(prefix: string = 'data-validate') {
     this.prefix = prefix;
   }
 
@@ -15,7 +15,7 @@ export class RulesExtractor {
   filterElements(element: HTMLElement) {
     const re = new RegExp(`^${this.prefix}`);
 
-    const allElements = Array.from(element.querySelectorAll<HTMLElement>("*"));
+    const allElements = Array.from(element.querySelectorAll<HTMLElement>('*'));
     return allElements.filter((el: HTMLElement) => {
       const matches = Array.from(el.attributes).filter((attr) => {
         return re.test(attr.name);
@@ -37,7 +37,7 @@ export class RulesExtractor {
    */
   getRuleParameters(element: HTMLElement, ruleName: string): any {
     const params = Object.create(null);
-    const ruleParamsRe = new RegExp(`^${this.prefix}-${ruleName}__([a-z]+)$`, "i");
+    const ruleParamsRe = new RegExp(`^${this.prefix}-${ruleName}__([a-z]+)$`, 'i');
 
     Array.from(element.attributes).forEach((attr: Attr) => {
       const match = ruleParamsRe.exec(attr.name);
@@ -51,7 +51,7 @@ export class RulesExtractor {
   }
 
   getRules(elements: HTMLElement[]): any {
-    const ruleNameRe = new RegExp(`^${this.prefix}-(?<ruleName>([a-z]+)(-([a-z]+))*)$`, "i");
+    const ruleNameRe = new RegExp(`^${this.prefix}-(?<ruleName>([a-z]+)(-([a-z]+))*)$`, 'i');
     const elementRuleMap = new Map<HTMLElement, any[]>();
 
     elements.forEach((el: HTMLElement) => {

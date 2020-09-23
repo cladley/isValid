@@ -1,13 +1,13 @@
-import { Rule } from "./index";
-import { isInputElement } from "../utils";
+import { Rule } from './index';
+import { isInputElement } from '../utils';
 
 export class MatchRule implements Rule {
   element: HTMLElement | HTMLInputElement;
   otherElement: HTMLInputElement | null;
   params: Record<string, string>;
   priority = 99;
-  name = "match";
-  message = "";
+  name = 'match';
+  message = '';
 
   constructor(element: HTMLElement, params: Record<string, string>) {
     this.element = element;
@@ -30,8 +30,6 @@ export class MatchRule implements Rule {
 
   validate(): boolean {
     const [value1, value2] = this.getValue();
-    console.log(value1);
-    console.log(value2);
     return value1.trim() === value2.trim();
   }
 }
