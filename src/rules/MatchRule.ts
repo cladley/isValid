@@ -17,7 +17,7 @@ export class MatchRule implements Rule {
 
     if (!this.otherElement) {
       throw new Error(
-        `MatchRule error: Could not find element by selector '${this.params.ruleValue}'`
+        `MatchRule error: Could not find element by selector '${this.params.ruleValue}'`,
       );
     }
   }

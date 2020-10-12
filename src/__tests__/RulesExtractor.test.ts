@@ -1,4 +1,4 @@
-import { RulesExtractor } from '../RulesExtractor';
+import { RulesExtractor } from '../helpers/RulesExtractor';
 
 const htmlTemplateString = `
   <div class="parent">
@@ -51,7 +51,7 @@ describe('RulesExtractor class', () => {
     expect(ruleObjArray).not.toBeDefined();
   });
 
-  it("should create an object with keys of 'name' and 'param' for each rule", () => {
+  it('should create an object with keys of \'name\' and \'param\' for each rule', () => {
     const firstInput = document.querySelector('.firstInput') as HTMLElement;
     const rulesMap = rulesExtractor.getElementsWithValidationRules(parentElement);
     const ruleObjArray = rulesMap.get(firstInput);
@@ -70,7 +70,7 @@ describe('RulesExtractor class', () => {
             other: 'test',
           },
         }),
-      ])
+      ]),
     );
   });
 });

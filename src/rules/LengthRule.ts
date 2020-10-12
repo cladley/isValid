@@ -1,12 +1,12 @@
-import { Rule } from "./index";
-import { extractValueAndOperator } from "../utils";
+import { Rule } from './index';
+import { extractValueAndOperator } from '../utils';
 
 export class LengthRule implements Rule {
   element: HTMLElement | HTMLInputElement;
   params: Record<string, string>;
   priority = 99;
-  name = "length";
-  message = "";
+  name = 'length';
+  message = '';
 
   constructor(element: HTMLElement, params: Record<string, string>) {
     this.element = element;
@@ -24,6 +24,7 @@ export class LengthRule implements Rule {
   validate(): boolean {
     const value = this.getValue();
     const valueOperator = extractValueAndOperator(this.params.ruleValue);
+
     return eval(`${value.trim().length} ${valueOperator.operator} ${valueOperator.value}`);
   }
 }

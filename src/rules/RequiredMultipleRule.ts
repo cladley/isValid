@@ -1,20 +1,20 @@
-import { Rule } from "./index";
-import { extractValueAndOperator } from "../utils";
+import { Rule } from './index';
+import { extractValueAndOperator } from '../utils';
 
 export class RequiredMultipleRule implements Rule {
   element: HTMLElement | HTMLInputElement;
   inputs: HTMLInputElement[];
   params: Record<string, string>;
   priority = 100;
-  name = "requiredMultiple";
-  message = "";
+  name = 'requiredMultiple';
+  message = '';
 
   constructor(element: HTMLElement, params: Record<string, string> = {}) {
     this.element = element;
-    this.inputs = Array.from(this.element.querySelectorAll<HTMLInputElement>("input"));
+    this.inputs = Array.from(this.element.querySelectorAll<HTMLInputElement>('input'));
 
     if (!this.inputs) {
-      throw new Error("Some error about requiredMultiple");
+      throw new Error('Some error about requiredMultiple');
     }
     this.params = params;
     this.message = this.params.message;
@@ -25,13 +25,12 @@ export class RequiredMultipleRule implements Rule {
   validate(): boolean {
     const valueOperator = extractValueAndOperator(this.params.ruleValue);
     const filledValues = this.inputs.filter((element) => {
-      if (element.type === "checkbox") {
+      if (element.type === 'checkbox') {
         return element.checked;
-      } else {
-        return element.value.trim() !== "";
       }
+      return element.value.trim() !== '';
     });
-
+    // eslint-disable-next-line no-eval
     return eval(`${filledValues.length} ${valueOperator.operator} ${valueOperator.value}`);
   }
 }

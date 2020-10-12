@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/dom";
-import { FieldRenderer } from "../FieldRenderer";
-import { FieldState } from "../FieldValidator";
+import { FieldRenderer } from "../helpers/FieldRenderer";
+import { FieldState } from "../helpers/FieldValidator";
 
 const htmlTemplateString = `
   <div class="form-group" data-testid="parent">

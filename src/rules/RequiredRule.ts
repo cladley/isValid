@@ -1,11 +1,11 @@
-import { Rule } from "./index";
+import { Rule } from './index';
 
 export class RequiredRule implements Rule {
   element: HTMLElement | HTMLInputElement;
   params: Record<string, string>;
   priority = 100;
-  name = "required";
-  message = "";
+  name = 'required';
+  message = '';
 
   constructor(element: HTMLElement, params: Record<string, string> = {}) {
     this.element = element;
@@ -15,17 +15,15 @@ export class RequiredRule implements Rule {
 
   getValue(): any {
     if (this.element instanceof HTMLInputElement) {
-      if (this.element.type === "checkbox") {
+      if (this.element.type === 'checkbox') {
         return this.element.checked;
-      } else {
-        return this.element.value;
       }
-    } else if (this.element instanceof HTMLSelectElement) {
+      return this.element.value;
+    } if (this.element instanceof HTMLSelectElement) {
       if (this.element.selectedIndex) {
         return this.element.options[this.element.selectedIndex].value;
-      } else {
-        return false;
       }
+      return false;
     }
 
     return this.element;
@@ -34,13 +32,12 @@ export class RequiredRule implements Rule {
   validate(): boolean {
     const value = this.getValue();
 
-    if (typeof value === "string") {
-      if (value.trim() === "") {
+    if (typeof value === 'string') {
+      if (value.trim() === '') {
         return false;
       }
       return true;
-    } else {
-      return value;
     }
+    return value;
   }
 }

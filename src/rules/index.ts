@@ -1,10 +1,10 @@
-import { RequiredRule } from "./RequiredRule";
-import { RequiredMultipleRule } from "./RequiredMultipleRule";
-import { LengthRule } from "./LengthRule";
-import { RegexRule } from "./RegexRule";
-import { EmailRule } from "./EmailRule";
-import { AsyncRule } from "./AsyncRule";
-import { MatchRule } from "./MatchRule";
+import { RequiredRule } from './RequiredRule';
+import { RequiredMultipleRule } from './RequiredMultipleRule';
+import { LengthRule } from './LengthRule';
+import { RegexRule } from './RegexRule';
+import { EmailRule } from './EmailRule';
+import { AsyncRule } from './AsyncRule';
+import { MatchRule } from './MatchRule';
 
 export interface Rule {
   name: string;
@@ -24,10 +24,10 @@ export function addRule(ruleName: string, rule: RuleType) {
   rules.set(ruleName, rule);
 }
 
-addRule("required", RequiredRule);
-addRule("requiredMultiple", RequiredMultipleRule);
-addRule("async", AsyncRule);
-addRule("length", LengthRule);
-addRule("regex", RegexRule);
-addRule("email", EmailRule);
-addRule("match", MatchRule);
+addRule('required', RequiredRule);
+addRule('requiredMultiple', RequiredMultipleRule);
+addRule('async', AsyncRule);
+addRule('length', LengthRule);
+addRule('regex', RegexRule);
+addRule('email', EmailRule);
+addRule('match', MatchRule);

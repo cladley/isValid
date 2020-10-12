@@ -52,6 +52,10 @@
         animation: fade 0.5s infinite both;
         visibility: hidden;
       }
+
+      .is-hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -66,7 +70,7 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group form-group--firstname">
         <label>First Name:</label>
         <input
           class=""
@@ -79,7 +83,7 @@
         />
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>Username:</label>
         <input
           class=""
@@ -89,9 +93,9 @@
           data-validate-username__message="Username already taken, please choose another"
         />
         <span class="validating-message">validating</span>
-      </div>
+      </div> -->
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>City</label>
         <input
           type="text"
@@ -166,9 +170,11 @@
           <input type="checkbox" />
           <input type="checkbox" />
         </div>
-      </div>
+      </div> -->
       <button type="submit">Submit</button>
       <button type="button" class="btn-manual">Run validation manually</button>
+      <button type="button" class="btn-reset">Reset form</button>
+      <button type="button" class="btn-hide">Hide element</button>
     </form>
     <script src="index.ts"></script>
   </body>

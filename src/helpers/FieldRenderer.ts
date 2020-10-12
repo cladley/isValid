@@ -1,4 +1,4 @@
-import { FieldState } from "./FieldValidator";
+import { FieldState } from './FieldValidator';
 
 export interface FieldRendererProps {
   errorClass: string;
@@ -13,9 +13,13 @@ export interface FieldRendererProps {
 
 export class FieldRenderer {
   element: HTMLElement;
+
   parentElement: HTMLElement | null;
+
   errorElement?: HTMLElement;
+
   _fieldState: FieldState = FieldState.isPristine;
+
   props: FieldRendererProps;
 
   constructor(element: HTMLElement, props: FieldRendererProps) {
@@ -30,14 +34,14 @@ export class FieldRenderer {
       this.props.pristineClass,
       this.props.validatingClass,
       this.props.validClass,
-      this.props.errorClass
+      this.props.errorClass,
     );
 
     this.parentElement?.classList.remove(
       this.props.pristineClass,
       this.props.validatingClass,
       this.props.validClass,
-      this.props.errorClass
+      this.props.errorClass,
     );
 
     this._fieldState = value;
@@ -49,7 +53,7 @@ export class FieldRenderer {
         break;
       case FieldState.isValid:
         this.element.classList.add(this.props.validClass);
-        this.element.setAttribute("aria-invalid", "false");
+        this.element.setAttribute('aria-invalid', 'false');
         this.parentElement?.classList.add(this.props.validClass);
         break;
       case FieldState.isValiding:
@@ -58,7 +62,7 @@ export class FieldRenderer {
         break;
       case FieldState.isError:
         this.element.classList.add(this.props.errorClass);
-        this.element.setAttribute("aria-invalid", "true");
+        this.element.setAttribute('aria-invalid', 'true');
         this.parentElement?.classList.add(this.props.errorClass);
         break;
     }
@@ -79,7 +83,7 @@ export class FieldRenderer {
   showError(text: string): void {
     const errorElement = this.getErrorElement();
     errorElement.textContent = text;
-    errorElement.style.display = "";
+    errorElement.style.display = '';
     this.parentElement?.appendChild(errorElement);
     this.parentElement?.classList.add(this.props.errorClass);
   }
@@ -87,8 +91,8 @@ export class FieldRenderer {
   hideError(): void {
     if (!this.errorElement) return;
 
-    this.errorElement.textContent = "";
-    this.errorElement.style.display = "none";
+    this.errorElement.textContent = '';
+    this.errorElement.style.display = 'none';
     this.parentElement?.classList.remove(this.props.errorClass);
   }
 }

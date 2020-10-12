@@ -1,5 +1,5 @@
-import { RulesExtractor } from './RulesExtractor';
-import { FieldValidator } from './FieldValidator';
+import { RulesExtractor } from './helpers/RulesExtractor';
+import { FieldValidator } from './helpers/FieldValidator';
 import { addRule, RuleType } from './rules';
 
 // interface SubmitEvent extends Event {
@@ -22,6 +22,7 @@ interface ValidateProps {
   errorElementType?: string;
   clearOnFocus?: boolean;
   live?: boolean;
+  onlyValidateWhenVisible: boolean;
   onSubmit?(event: Event, isValid: boolean, errors: InputErrors[]): void;
 }
 
@@ -41,6 +42,7 @@ const defaultProps = {
   errorElementType: 'span',
   clearOnFocus: false,
   live: false,
+  onlyValidateWhenVisible: true
 };
 
 export class Validate {
@@ -118,9 +120,8 @@ export class Validate {
     this.element.setAttribute('aria-relevant', 'addition removals');
     this.element.setAttribute('novalidate', '');
     const elementRules = this.rulesExtractor.getElementsWithValidationRules(this.element);
-    console.log(elementRules);
+
     for (const [element, rules] of elementRules) {
-      console.log(rules);
       this.activeValidators.push(new FieldValidator(element, rules, this.props));
     }
   }
@@ -136,14 +137,17 @@ export class Validate {
       event.preventDefault();
       event.submitter.setAttribute('disabled', '');
       this.element.classList.add(this.props.validatingClass as string);
-      const { isValid, errors } = await this.validate();
+
+      const validateResults = await this.validate();
+      const {isValid, errors} = validateResults ? validateResults : {isValid: false, errors: []};
+
       this.element.classList.remove(this.props.validatingClass as string);
       event.submitter.removeAttribute('disabled');
       this.props.onSubmit(event, isValid, errors);
     }
   };
 
-  async validate(force = false): Promise<{ isValid: boolean; errors: InputErrors[] }> {
+  async validate(force = false): Promise<{ isValid: boolean; errors: InputErrors[] } | undefined>  {
     let areAllValid = true;
     const allErrors: InputErrors[] = [];
     const validatorsList = [];
@@ -155,7 +159,10 @@ export class Validate {
     try {
       const result = await Promise.all(validatorsList);
       for (let i = 0; i < result.length; i++) {
-        const { isValid, element, errors } = result[i];
+        const validationResult = result[i];
+        if(!validationResult) continue;
+       
+        const { isValid, element, errors } = validationResult;
 
         areAllValid = areAllValid && isValid;
         if (!isValid) {
@@ -175,7 +182,11 @@ export class Validate {
         errors: allErrors,
       };
     } catch (err) {
-      throw new Error('asd');
+      console.error(err);
     }
+  }
+
+  reset(): void {
+    this.activeValidators.forEach(v => v.reset());
   }
 }

@@ -67,3 +67,7 @@ export function isInputElement(
 
   return false;
 }
+
+export function isVisible(e: HTMLElement) {
+  return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+};

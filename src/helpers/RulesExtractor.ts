@@ -1,4 +1,4 @@
-import { toCamelCase } from './utils';
+import { toCamelCase } from '../utils';
 
 export class RulesExtractor {
   prefix: string;
@@ -17,9 +17,7 @@ export class RulesExtractor {
 
     const allElements = Array.from(element.querySelectorAll<HTMLElement>('*'));
     return allElements.filter((el: HTMLElement) => {
-      const matches = Array.from(el.attributes).filter((attr) => {
-        return re.test(attr.name);
-      });
+      const matches = Array.from(el.attributes).filter((attr) => re.test(attr.name));
 
       if (matches.length > 0) return true;
       return false;

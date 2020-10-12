@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/dom";
-import { FieldValidator } from "../FieldValidator";
+import { FieldValidator } from "../helpers/FieldValidator";
 
 const errorRequiredMessage = "This is required";
 const errorLengthMessage = "Needs to be at least 4 characters";

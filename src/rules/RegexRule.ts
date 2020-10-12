@@ -1,12 +1,12 @@
-import { Rule } from "./index";
-import { isInputElement, escapeRegex } from "../utils";
+import { Rule } from './index';
+import { isInputElement, escapeRegex } from '../utils';
 
 export class RegexRule implements Rule {
   element: HTMLElement | HTMLInputElement;
   params: Record<string, string>;
   priority = 99;
-  name = "regex";
-  message = "";
+  name = 'regex';
+  message = '';
   regExp: RegExp;
 
   constructor(element: HTMLElement, params: Record<string, string> = {}) {

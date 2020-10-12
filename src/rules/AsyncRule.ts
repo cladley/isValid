@@ -1,4 +1,4 @@
-import { Rule } from "./index";
+import { Rule } from './index';
 
 function wait(timeout: number) {
   return new Promise((resolve) => {
@@ -12,7 +12,7 @@ export class AsyncRule implements Rule {
   element: HTMLElement | HTMLInputElement;
   params: Record<string, string>;
   priority = 100;
-  name = "async";
+  name = 'async';
 
   constructor(element: HTMLElement, params: Record<string, string>) {
     this.element = element;
@@ -32,13 +32,12 @@ export class AsyncRule implements Rule {
 
     await wait(4000);
 
-    if (typeof value === "string") {
-      if (value.trim() === "") {
+    if (typeof value === 'string') {
+      if (value.trim() === '') {
         return false;
       }
       return true;
-    } else {
-      return value;
     }
+    return value;
   }
 }

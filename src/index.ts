@@ -2,6 +2,9 @@ import { Validate } from './Validate';
 
 const form = document.querySelector<HTMLFormElement>('#form');
 const btnManual = document.querySelector<HTMLElement>('.btn-manual') as HTMLElement;
+const btnReset = document.querySelector<HTMLElement>('.btn-reset') as HTMLElement;
+const btnHide = document.querySelector<HTMLElement>('.btn-hide') as HTMLElement;
+
 let validate: Validate;
 
 function wait(timeout: number) {
@@ -37,6 +40,9 @@ if (form) {
     errorClass: 'is-error',
     clearOnFocus: true,
     onSubmit(event, isValid, errors) {
+
+      console.log(errors.length);
+
       if (isValid) {
         console.log('We can submit the form');
         // event.target.submit();
@@ -48,5 +54,14 @@ if (form) {
 
   btnManual.addEventListener('click', () => {
     validate.validate(true);
+  });
+
+  btnReset.addEventListener('click', () => {
+    validate.reset();
+  });
+
+  btnHide.addEventListener('click', () => {
+    const x = document.querySelector('.form-group--firstname') as HTMLElement;
+    x.classList.toggle('is-hidden');
   });
 }

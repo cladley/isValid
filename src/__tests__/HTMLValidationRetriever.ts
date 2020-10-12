@@ -1,10 +1,10 @@
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 // import { HTMLValidate } from "../HTMLValidate";
 
-const html = readFileSync(resolve(__dirname, "./testPage.html"), "utf8");
+const html = readFileSync(resolve(__dirname, './testPage.html'), 'utf8');
 
-test("", () => {
+test('', () => {
   expect(true).toBe(true);
 });
 

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1600892952408" clover="3.2.0">
+  <project timestamp="1600892952409" name="All files">
+    <metrics statements="300" coveredstatements="230" conditionals="134" coveredconditionals="84" methods="66" coveredmethods="45" elements="500" coveredelements="359" complexity="0" loc="300" ncloc="300" packages="2" files="12" classes="12"/>
+    <package name="src">
+      <metrics statements="181" coveredstatements="158" conditionals="99" coveredconditionals="70" methods="42" coveredmethods="34"/>
+      <file name="FieldRenderer.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/FieldRenderer.ts">
+        <metrics statements="38" coveredstatements="37" conditionals="40" coveredconditionals="32" methods="6" coveredmethods="5"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="18" count="13" type="stmt"/>
+        <line num="22" count="13" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="24" count="13" type="stmt"/>
+        <line num="29" count="18" type="stmt"/>
+        <line num="36" count="18" type="cond" truecount="3" falsecount="1"/>
+        <line num="43" count="18" type="stmt"/>
+        <line num="45" count="18" type="stmt"/>
+        <line num="47" count="5" type="stmt"/>
+        <line num="48" count="5" type="cond" truecount="3" falsecount="1"/>
+        <line num="49" count="5" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="56" count="6" type="stmt"/>
+        <line num="57" count="6" type="cond" truecount="3" falsecount="1"/>
+        <line num="58" count="6" type="stmt"/>
+        <line num="60" count="5" type="stmt"/>
+        <line num="61" count="5" type="stmt"/>
+        <line num="62" count="5" type="cond" truecount="3" falsecount="1"/>
+        <line num="63" count="5" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="72" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="7" type="stmt"/>
+        <line num="75" count="7" type="stmt"/>
+        <line num="76" count="7" type="stmt"/>
+        <line num="80" count="8" type="stmt"/>
+        <line num="81" count="8" type="stmt"/>
+        <line num="82" count="8" type="stmt"/>
+        <line num="83" count="8" type="cond" truecount="3" falsecount="1"/>
+        <line num="84" count="8" type="cond" truecount="3" falsecount="1"/>
+        <line num="88" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="92" count="1" type="cond" truecount="3" falsecount="1"/>
+      </file>
+      <file name="FieldValidator.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/FieldValidator.ts">
+        <metrics statements="75" coveredstatements="61" conditionals="32" coveredconditionals="18" methods="16" coveredmethods="13"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="39" count="4" type="stmt"/>
+        <line num="46" count="4" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="48" count="4" type="stmt"/>
+        <line num="50" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="54" count="4" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="61" count="8" type="stmt"/>
+        <line num="62" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="63" count="8" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="70" count="4" type="stmt"/>
+        <line num="75" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="79" count="4" type="stmt"/>
+        <line num="80" count="4" type="stmt"/>
+        <line num="83" count="4" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="87" count="4" type="stmt"/>
+        <line num="88" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="91" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="99" count="4" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="101" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="112" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="113" count="4" type="stmt"/>
+        <line num="118" count="5" type="stmt"/>
+        <line num="119" count="5" type="stmt"/>
+        <line num="120" count="8" type="stmt"/>
+        <line num="122" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="123" count="4" type="stmt"/>
+        <line num="124" count="4" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="132" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="133" count="1" type="stmt"/>
+        <line num="135" count="4" type="stmt"/>
+        <line num="140" count="5" type="stmt"/>
+        <line num="141" count="4" type="stmt"/>
+        <line num="146" count="5" type="cond" truecount="3" falsecount="1"/>
+        <line num="147" count="0" type="stmt"/>
+        <line num="154" count="5" type="stmt"/>
+        <line num="156" count="5" type="stmt"/>
+        <line num="157" count="5" type="stmt"/>
+        <line num="159" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="161" count="5" type="stmt"/>
+        <line num="162" count="5" type="stmt"/>
+        <line num="163" count="5" type="stmt"/>
+        <line num="165" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="168" count="4" type="stmt"/>
+        <line num="171" count="5" type="stmt"/>
+        <line num="173" count="5" type="stmt"/>
+        <line num="180" count="0" type="stmt"/>
+      </file>
+      <file name="RulesExtractor.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/RulesExtractor.ts">
+        <metrics statements="32" coveredstatements="32" conditionals="11" coveredconditionals="11" methods="10" coveredmethods="10"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="9" type="stmt"/>
+        <line num="21" count="39" type="stmt"/>
+        <line num="24" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="39" count="9" type="stmt"/>
+        <line num="40" count="9" type="stmt"/>
+        <line num="42" count="9" type="stmt"/>
+        <line num="43" count="54" type="stmt"/>
+        <line num="45" count="54" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="12" type="stmt"/>
+        <line num="50" count="9" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+        <line num="58" count="6" type="stmt"/>
+        <line num="59" count="33" type="stmt"/>
+        <line num="61" count="33" type="cond" truecount="4" falsecount="0"/>
+        <line num="62" count="9" type="stmt"/>
+        <line num="63" count="9" type="stmt"/>
+        <line num="64" count="9" type="stmt"/>
+        <line num="65" count="9" type="stmt"/>
+        <line num="67" count="9" type="stmt"/>
+        <line num="70" count="9" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+      </file>
+      <file name="utils.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/utils.ts">
+        <metrics statements="36" coveredstatements="28" conditionals="16" coveredconditionals="9" methods="10" coveredmethods="6"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="8" type="stmt"/>
+        <line num="6" count="8" type="stmt"/>
+        <line num="8" count="8" type="cond" truecount="4" falsecount="2"/>
+        <line num="10" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="8" type="stmt"/>
+        <line num="15" count="8" type="stmt"/>
+        <line num="17" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="27" count="21" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+        <line num="42" count="5" type="stmt"/>
+        <line num="44" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="53" count="4" type="stmt"/>
+        <line num="54" count="4" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="64" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="68" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.rules">
+      <metrics statements="119" coveredstatements="72" conditionals="35" coveredconditionals="14" methods="24" coveredmethods="11"/>
+      <file name="AsyncRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/AsyncRule.ts">
+        <metrics statements="18" coveredstatements="1" conditionals="6" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+      </file>
+      <file name="EmailRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/EmailRule.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="8" type="stmt"/>
+        <line num="8" count="8" type="stmt"/>
+      </file>
+      <file name="LengthRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/LengthRule.ts">
+        <metrics statements="14" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="9" count="9" type="stmt"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
+        <line num="14" count="9" type="stmt"/>
+        <line num="18" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="10" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="26" count="8" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+      </file>
+      <file name="MatchRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/MatchRule.ts">
+        <metrics statements="14" coveredstatements="1" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="26" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+      </file>
+      <file name="RegexRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/RegexRule.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="3" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="7" count="15" type="stmt"/>
+        <line num="8" count="15" type="stmt"/>
+        <line num="9" count="15" type="stmt"/>
+        <line num="13" count="15" type="stmt"/>
+        <line num="14" count="15" type="stmt"/>
+        <line num="15" count="15" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+        <line num="20" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="21" count="15" type="stmt"/>
+        <line num="26" count="15" type="stmt"/>
+        <line num="27" count="15" type="stmt"/>
+      </file>
+      <file name="RequiredMultipleRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/RequiredMultipleRule.ts">
+        <metrics statements="17" coveredstatements="2" conditionals="5" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+      </file>
+      <file name="RequiredRule.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/RequiredRule.ts">
+        <metrics statements="22" coveredstatements="21" conditionals="13" coveredconditionals="12" methods="3" coveredmethods="3"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="17" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="10" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="35" count="12" type="stmt"/>
+        <line num="37" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="4" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/mnt/c/Users/colin/desktop/code/isValid/src/rules/index.ts">
+        <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="14" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

@@ -1,6 +1,8 @@
-import { Rule, rules } from "./rules";
-import { createDebouncedPromiseFunction, debounce, isInputElement } from "./utils";
-import { FieldRenderer } from "./FieldRenderer";
+import { Rule, rules } from '../rules';
+import {
+  createDebouncedPromiseFunction, debounce, isInputElement, isVisible,
+} from '../utils';
+import { FieldRenderer } from './FieldRenderer';
 
 export interface ValidationState {
   isValid: boolean;
@@ -29,19 +31,27 @@ export enum FieldState {
 
 export class FieldValidator {
   element: HTMLElement | HTMLInputElement;
+
   fieldRenderer: FieldRenderer;
+
   debouncedPromise = createDebouncedPromiseFunction();
+
   currentValidState: any;
+
   errors: string[] = [];
+
   props: FieldValidatorProps;
-  prevValue: string = "";
+
+  prevValue: string = '';
+
   hasChangedSinceLastValidation: boolean = true;
+
   private validators: Rule[] = [];
 
   constructor(
     element: HTMLElement | HTMLInputElement,
     rulesBlob: any[],
-    props: FieldValidatorProps
+    props: FieldValidatorProps,
   ) {
     this.element = element;
     this.props = props;
@@ -66,18 +76,16 @@ export class FieldValidator {
       }
     });
 
-    this.validators = this.validators.sort((a, b) => {
-      return b.priority - a.priority;
-    });
+    this.validators = this.validators.sort((a, b) => b.priority - a.priority);
   }
 
   attachEvents() {
     if (this.props.clearOnFocus) {
-      this.element.addEventListener("focus", this.onFocus);
+      this.element.addEventListener('focus', this.onFocus);
     }
 
-    this.element.addEventListener("blur", this.onBlur);
-    this.element.addEventListener("input", debounce(this.onChange, 200));
+    this.element.addEventListener('blur', this.onBlur);
+    this.element.addEventListener('input', debounce(this.onChange, 200));
   }
 
   onFocus = () => {
@@ -114,6 +122,12 @@ export class FieldValidator {
     }
   }
 
+  reset() {
+    this.fieldRenderer.fieldState = FieldState.isPristine;
+    this.clearError();
+    this.errors = [];
+  }
+
   async checkAllValidators(): Promise<Rule[]> {
     const errors: Rule[] = [];
     for (let i = 0; i < this.validators.length; i++) {
@@ -137,12 +151,12 @@ export class FieldValidator {
   }
 
   extractErrorMessages(errors: Rule[]): string[] {
-    return errors.map((e) => {
-      return e.message;
-    });
+    return errors.map((e) => e.message);
   }
 
-  async validate(force: boolean): Promise<ValidationState> {
+  async validate(force: boolean): Promise<ValidationState | undefined> {
+    if (!isVisible(this.element)) return;
+
     if (!this.hasChangedSinceLastValidation && !force) {
       return {
         isValid: this.errors.length === 0,
@@ -175,10 +189,8 @@ export class FieldValidator {
           errors: this.errors,
           element: this.element,
         };
-      } else {
-        // throw new Error("This is BAD YOOOO");
-        return;
       }
+      // throw new Error("This is BAD YOOOO");
     } catch (error) {}
   }
 }
